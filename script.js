@@ -53,12 +53,12 @@ function initScratch() {
         }
     };
 
-    // --- แก้ไขตรงนี้: พิมพ์แค่บรรทัดละครั้ง เรียงกัน 4 บรรทัดจบ ---
+    // --- แก้ไข: พิมพ์รวดเดียว 4 บรรทัด บรรทัดละ 1 ครั้งตามคลิป ---
     async function showFinalMessage() {
         document.getElementById('scratch-hint').classList.add('hidden');
         const overlay = document.getElementById('final-message');
         overlay.classList.remove('hidden');
-        overlay.innerHTML = ""; // ล้างหน้าจอให้ว่าง
+        overlay.innerHTML = ""; // เคลียร์หน้าจอให้ว่าง
 
         await new Promise(r => setTimeout(r, 1000)); // รอ 1 วิเห็นรูปชัดๆ
 
@@ -69,10 +69,10 @@ function initScratch() {
             "น่ารักไหมคะ"         
         ];
 
-        // วนลูปพิมพ์แค่ 4 บรรทัด บรรทัดละ 1 รอบเท่านั้น
+        // วนลูปพิมพ์แค่ 4 บรรทัด บรรทัดละ 1 รอบเรียงต่อกัน
         for (let i = 0; i < texts.length; i++) {
             const line = document.createElement('div');
-            line.style.margin = "8px 0"; // ระยะห่างกำลังดีไม่ให้ติดกัน
+            line.style.margin = "5px 0"; // ระยะห่างบรรทัด
             overlay.appendChild(line);
             
             for (const char of texts[i]) {
