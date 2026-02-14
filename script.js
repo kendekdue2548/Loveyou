@@ -1,7 +1,8 @@
 let fill = 0; 
 let interval;
 let isFinishedTyping = false; 
-let isQuizAnswered = false; // แยกตัวแปรเช็คของ Quiz ออกมา
+let isQuizAnswered = false; 
+let userScore = 0; // ตัวแปรเก็บคะแนนสำหรับหน้าสรุป
 
 // --- หน้า 1: หัวใจเติมน้ำ (แก้ให้กดได้ปกติแล้ว) ---
 function startFill() { 
@@ -53,7 +54,7 @@ function goToPage3() {
     initScratch();
 }
 
-// --- หน้า 3: หน้าขูดรูป ---
+// --- หน้า 3: หน้าขูดรูป (ระบบพิมพ์บรรทัดเดียว ไม่ซ้ำ) ---
 function initScratch() {
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
@@ -122,7 +123,7 @@ function goToPage4() {
 }
 
 function openGift(type) {
-    document.getElementById('page4').classList.add('hidden');
+    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden')); 
     if (type === 'memory') {
         document.getElementById('page-memory').classList.remove('hidden');
         updateSlide();
@@ -134,12 +135,11 @@ function openGift(type) {
     }
 }
 
-// --- ฟังก์ชันเสริมสำหรับ ความทรงจำ, จดหมาย, แบบทดสอบ ---
-
-// 1. ความทรงจำ
+// --- 1. ระบบความทรงจำ (3 รูปเลื่อนได้) ---
 const memories = [
     { img: "https://img5.pic.in.th/file/secure-sv1/1604a70e0a529f353.jpg", title: "วันแรกที่คุยกัน", desc: "ตอนนั้นไม่ได้คิดอะไรเลย แค่คุยไปเรื่อย ๆ แต่ไม่รู้ทำไมถึงจำได้จนวันนี้" },
-    { img: "https://img2.pic.in.th/27140cc9efb175e5f.jpg", title: "วาเลนไทน์เดย์", desc: "ตื่นเต้นมากจนทำตัวไม่ถูก แต่เป็นวันที่ที่สุดเลย" }
+    { img: "https://img2.pic.in.th/27140cc9efb175e5f.jpg", title: "วาเลนไทน์เดย์", desc: "ตื่นเต้นมากจนทำตัวไม่ถูก แต่เป็นวันที่ที่สุดเลย" },
+    { img: "https://via.placeholder.com/300x400?text=Memory+3", title: "ทริปของเรา", desc: "มีความสุขทุกครั้งที่ได้ไปเที่ยวด้วยกันนะ" }
 ];
 let currentSlide = 0;
 function updateSlide() {
@@ -152,15 +152,16 @@ function changeSlide(dir) {
     currentSlide = (currentSlide + dir + memories.length) % memories.length; 
     updateSlide(); 
 }
+
+// --- 2. ระบบจดหมาย ---
 function backToMenu() { 
+    currentQuiz = 0; userScore = 0; // รีเซ็ตค่า quiz เผื่อเล่นใหม่
     document.querySelectorAll('.card').forEach(c => c.classList.add('hidden')); 
     document.getElementById('page4').classList.remove('hidden'); 
 }
-
-// 2. จดหมาย
 function backToMenuFromLetter() { backToMenu(); }
 
-// 3. แบบทดสอบ (พร้อมระบบสี แดง-เขียว)
+// --- 3. ระบบแบบทดสอบ (เฉลย แดง-เขียว และหน้าสรุปคะแนน) ---
 const quizData = [
     { q: "เราเจอกันครั้งแรกที่ไหน?", options: ["มหาลัย", "ออนไลน์", "ร้านกาแฟ", "โรงเรียน"], answer: 1 },
     { q: "สิ่งที่เค้าชอบทำมากที่สุด?", options: ["ดูหนัง", "คุยกัน", "กินข้าว", "เล่นเกม"], answer: 3 },
@@ -187,12 +188,22 @@ function checkAnswer(idx, el) {
     isQuizAnswered = true;
     const correct = quizData[currentQuiz].answer;
     document.getElementById('options-list').classList.add('answered');
-    if (idx === correct) { el.classList.add('correct'); } 
-    else { el.classList.add('wrong'); document.querySelectorAll('.option-item')[correct].classList.add('correct'); }
+    if (idx === correct) { 
+        el.classList.add('correct'); 
+        userScore++; // นับคะแนน
+    } else { 
+        el.classList.add('wrong'); 
+        document.querySelectorAll('.option-item')[correct].classList.add('correct'); 
+    }
 }
 function nextQuiz() {
     if (!isQuizAnswered) { alert("เลือกคำตอบก่อนนะจ๊ะ!"); return; }
     currentQuiz++;
     if (currentQuiz < quizData.length) { loadQuiz(); } 
-    else { alert("เก่งมาก! รู้จักเราดีที่สุดเลย ❤️"); currentQuiz = 0; backToMenu(); }
+    else { showQuizResult(); } // จบแล้วไปหน้าสรุปคะแนน
+}
+function showQuizResult() {
+    document.getElementById('page-quiz').classList.add('hidden');
+    document.getElementById('page-quiz-result').classList.remove('hidden');
+    document.getElementById('final-score').innerText = userScore; // โชว์คะแนนจริง
 }
