@@ -108,6 +108,22 @@
     <button class="btn-primary" style="margin-top: auto; margin-bottom: 10px;" onclick="backToMenuFromLetter()">กลับไปหน้าเมนู</button>
 </div>
 
+    <div id="page-quiz" class="card hidden">
+    <div class="main-title" style="font-size: 22px; margin-bottom: 5px;">รู้จักเราดีแค่ไหน</div>
+    <div id="quiz-progress" class="sub-title" style="font-size: 14px; margin-bottom: 20px;">ข้อที่ 1 / 5</div>
+    
+    <div class="quiz-container">
+        <div class="question-box">
+            <p id="question-text">คำถามจะขึ้นตรงนี้</p>
+        </div>
+
+        <div id="options-list" class="options-container">
+            </div>
+    </div>
+
+    <button id="btn-next-quiz" class="btn-primary" style="margin-top: auto; margin-bottom: 10px;" onclick="nextQuiz()">ข้อต่อไป</button>
+</div>
+
     <script src="script.js"></script>
 </body>
 </html>
