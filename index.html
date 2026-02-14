@@ -11,50 +11,35 @@
 
     <div id="page1" class="card">
         <div class="top-section">
-            <img src="https://img2.pic.in.th/de12bef47cbc7793b38480de0a594de3-removebg-preview.png" class="snoopy-top-1">
+            <img src="https://img2.pic.in.th/de12bef47cbc7793b38480de0a594de3-removebg-preview.png" class="header-img-large">
             <div class="header-text">
                 <div class="main-title">My Valentine</div>
                 <div class="sub-title">for the one I love</div>
             </div>
         </div>
         
-        <div class="page-title">My Valentine 1</div>
-        <div class="page-subtitle">for the one I love</div>
-
         <div class="heart-container" onmousedown="startFill()" onmouseup="stopFill()" ontouchstart="startFill()" ontouchend="stopFill()">
-            <div class="mini-heart">❤</div>
             <svg class="heart-outline" viewBox="0 0 32 32">
                 <path d="M16 28.5L14.1 26.6C7.3 20.4 3 16.5 3 11.5 3 7.4 6.4 4 10.5 4c2.3 0 4.5 1.1 5.5 3 1-1.9 3.2-3 5.5-3 4.1 0 7.5 3.4 7.5 7.5 0 5-4.3 8.9-11.1 15.1L16 28.5z"/>
             </svg>
             <div class="heart-mask">
                 <div class="liquid" id="liquidFill"></div>
-                <span class="liquid-label">liquidFill</span>
             </div>
-            <span class="heg-label">heg%</span>
         </div>
         <p class="hint-text">กดค้างที่หัวใจซิ...</p>
     </div>
 
     <div id="page2" class="card hidden">
         <div class="top-section">
-            <img src="https://img5.pic.in.th/file/secure-sv1/cbdbba01da08c0f82cae2f69844009bd-removebg-preview.png" class="snoopy-top-2">
+            <img src="https://img5.pic.in.th/file/secure-sv1/cbdbba01da08c0f82cae2f69844009bd-removebg-preview.png" class="header-img-snoopy-mail">
             <div class="header-text">
                 <div class="main-title">My Valentine</div>
                 <div class="sub-title">for the one I love</div>
             </div>
         </div>
 
-        <div class="page-title">My Valentine 2</div>
-        <div class="page-subtitle">for the one I love</div>
-
-        <div class="message-box">
-            <div class="box-header">message box</div>
-            <div class="box-content">
-                <span class="pink-text">นัม</span><br>
-                <div id="typing-area"></div>
+        <div class="message-box-white" id="typing-area">
             </div>
-            <div class="btn-next-label">btn-next label</div>
-        </div>
 
         <button id="btn-next" class="btn-bottom hidden" onclick="goToPage3()">ดูเรื่องราวของเรา ❤️</button>
     </div>
