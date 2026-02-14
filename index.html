@@ -4,141 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Valentine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        /* --- จุดที่ 1: แก้ไขโทนสีและพื้นหลังที่นี่ --- */
-        :root {
-            --primary-pink: #ff6b81;
-            --bg-color: #ffe4e1;
-            --card-white: rgba(255, 255, 255, 0.9);
-        }
-
-        body {
-            font-family: 'Kanit', sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .container {
-            background: var(--card-white);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-            position: relative;
-        }
-
-        .hidden { display: none; }
-
-        /* การตกแต่งปุ่ม */
-        button {
-            background-color: var(--primary-pink);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: 0.3s;
-            width: 100%;
-        }
-
-        input {
-            width: 80%;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-            font-size: 18px;
-        }
-
-        /* เมนู Grid แบบในคลิป */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .menu-item {
-            background: #fff;
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid #ffe4e1;
-            cursor: pointer;
-            font-size: 14px;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="page1" class="container">
-        <h2 style="color: var(--primary-pink);">❤️ My Valentine</h2>
-        <p>สำหรับคนพิเศษของผม</p>
-        <input type="password" id="passInput" placeholder="กรอกรหัสผ่าน (1234)">
-        <button onclick="checkPass()">ตกลง</button>
-    </div>
-
-    <div id="page2" class="container hidden">
-        <h3>เลือกเมนู</h3>
-        <div class="menu-grid">
-            <div class="menu-item" onclick="showContent('ความทรงจำ')">📸 ความทรงจำ</div>
-            <div class="menu-item" onclick="showContent('จดหมาย')">✉️ จดหมาย</div>
-            <div class="menu-item" onclick="alert('ไปเขียนควิซเพิ่มนะ!')">📝 แบบทดสอบ</div>
-            <div class="menu-item" onclick="alert('ไปใส่เพลงเพิ่มนะ!')">🎵 เพลงของเรา</div>
+    <div id="page1" class="card">
+        <img src="https://img2.pic.in.th/de12bef47cbc7793b38480de0a594de3-removebg-preview.png" class="header-img-1">
+        <div class="text-group-1">
+            <div class="title">My Valentine</div>
+            <div class="subtitle">for the one I love</div>
         </div>
+        <div class="heart-container" onmousedown="startFill()" onmouseup="stopFill()" ontouchstart="startFill()" ontouchend="stopFill()">
+            <svg class="heart-outline" viewBox="0 0 32 32">
+                <path d="M16 28.5L14.1 26.6C7.3 20.4 3 16.5 3 11.5 3 7.4 6.4 4 10.5 4c2.3 0 4.5 1.1 5.5 3 1-1.9 3.2-3 5.5-3 4.1 0 7.5 3.4 7.5 7.5 0 5-4.3 8.9-11.1 15.1L16 28.5z"/>
+            </svg>
+            <div class="heart-mask"><div class="liquid" id="liquidFill"></div></div>
+        </div>
+        <p class="hint-text">กดค้างที่หัวใจซิ...</p>
     </div>
 
-    <div id="page3" class="container hidden">
-        <div id="contentDisplay"></div>
-        <button onclick="goBack()">กลับหน้าเมนู</button>
+    <div id="page2" class="card hidden">
+        <img src="https://img5.pic.in.th/file/secure-sv1/cbdbba01da08c0f82cae2f69844009bd-removebg-preview.png" class="header-img-2">
+        <div class="text-group-2">
+            <div class="title" style="font-size: 22px;">My Valentine</div>
+            <div class="subtitle" style="font-size: 14px;">for the one I love</div>
+        </div>
+        <div class="message-box" id="typing-area"></div>
+        <button id="btn-next" class="btn-bottom hidden" onclick="goToPage3()">ดูเรื่องราวของเรา ❤️</button>
     </div>
 
-    <script>
-        // --- จุดที่ 2: แก้ไขรหัสผ่านที่นี่ ---
-        function checkPass() {
-            const pass = document.getElementById('passInput').value;
-            if(pass === '1234') { 
-                nextPage('page1', 'page2');
-            } else {
-                alert('รหัสผิดนะเจ้าตัวแสบ!');
-            }
-        }
+    <div id="page3" class="card hidden">
+        <div class="title" style="font-size: 24px; margin-bottom: 15px;">Our Story</div>
+        <img src="https://img5.pic.in.th/file/secure-sv1/F1B38447-4BA4-4992-B3FE-ED9A414A4B56.jpg" class="story-img">
+        <div class="story-text">
+            <p>ขอบคุณที่เข้ามาในชีวิตเค้านะ</p>
+            <p>ทุกช่วงเวลาที่มีเธอคือสิ่งที่ดีที่สุด</p>
+            <p>อยู่เป็นความสุขของกันแบบนี้ไปนานๆ นะ ❤️</p>
+        </div>
+        <button class="btn-bottom" onclick="location.reload()">ย้อนกลับไปหน้าแรก</button>
+    </div>
 
-        function nextPage(oldPage, newPage) {
-            document.getElementById(oldPage).classList.add('hidden');
-            document.getElementById(newPage).classList.remove('hidden');
-        }
-
-        function showContent(type) {
-            const display = document.getElementById('contentDisplay');
-            // --- จุดที่ 3: แก้ไขเนื้อหาข้อความ/รูปภาพตรงนี้ ---
-            if(type === 'ความทรงจำ') {
-                display.innerHTML = `
-                    <h3>ความทรงจำของเรา</h3>
-                    <img src="https://via.placeholder.com/200" style="width:100%; border-radius:10px;">
-                    <p>วันที่เราเจอกันครั้งแรก...</p>
-                `;
-            } else if(type === 'จดหมาย') {
-                display.innerHTML = `
-                    <h3>ถึง...คนเก่ง</h3>
-                    <p>ขอบคุณที่อยู่ข้างกันนะ รักมากๆ เลย</p>
-                `;
-            }
-            nextPage('page2', 'page3');
-        }
-
-        function goBack() {
-            nextPage('page3', 'page2');
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
