@@ -15,14 +15,9 @@
             <div class="main-title">My Valentine</div>
             <div class="sub-title">for the one I love</div>
         </div>
-        
         <div class="heart-wrapper" onmousedown="startFill()" onmouseup="stopFill()" ontouchstart="startFill()" ontouchend="stopFill()">
-            <svg class="heart-svg" viewBox="0 0 32 32">
-                <path d="M16 28.5L14.1 26.6C7.3 20.4 3 16.5 3 11.5 3 7.4 6.4 4 10.5 4c2.3 0 4.5 1.1 5.5 3 1-1.9 3.2-3 5.5-3 4.1 0 7.5 3.4 7.5 7.5 0 5-4.3 8.9-11.1 15.1L16 28.5z"/>
-            </svg>
-            <div class="heart-mask-fill">
-                <div class="liquid-pink" id="liquidFill"></div>
-            </div>
+            <svg class="heart-svg" viewBox="0 0 32 32"><path d="M16 28.5L14.1 26.6C7.3 20.4 3 16.5 3 11.5 3 7.4 6.4 4 10.5 4c2.3 0 4.5 1.1 5.5 3 1-1.9 3.2-3 5.5-3 4.1 0 7.5 3.4 7.5 7.5 0 5-4.3 8.9-11.1 15.1L16 28.5z"/></svg>
+            <div class="heart-mask-fill"><div class="liquid-pink" id="liquidFill"></div></div>
         </div>
         <p class="guide-text">กดค้างที่หัวใจซิ...</p>
     </div>
@@ -35,6 +30,17 @@
         </div>
         <div class="message-box-white" id="typing-area"></div>
         <button id="btn-next" class="btn-primary hidden" onclick="goToPage3()">ดูเรื่องราวของเรา ❤️</button>
+    </div>
+
+    <div id="page3" class="card hidden">
+        <div class="main-title" style="font-size: 24px; margin-bottom: 15px;">Our Story</div>
+        <div class="scratch-container">
+            <img src="https://img5.pic.in.th/file/secure-sv1/F1B38447-4BA4-4992-B3FE-ED9A414A4B56.jpg" id="reveal-image">
+            <div id="final-message" class="overlay-text hidden"></div>
+            <canvas id="scratch-canvas"></canvas>
+        </div>
+        <p class="guide-text" id="scratch-hint">ลองขูดดูซิ มีอะไรซ่อนอยู่...</p>
+        <button class="btn-primary" style="margin-top: auto; margin-bottom: 10px;" onclick="location.reload()">กลับหน้าแรก</button>
     </div>
 
     <script src="script.js"></script>
