@@ -1,37 +1,87 @@
-/* สัดส่วนหน้าหนึ่งสองที่มึงพอใจแล้ว */
-:root { --main-pink: #d63384; --soft-pink: #f9f9f9; --bg-color: #ffdae0; --glow-pink: rgba(214, 51, 132, 0.25); }
-body { font-family: 'Itim', cursive; background-color: var(--bg-color); margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-.card { background: white; width: 88%; max-width: 320px; height: 520px; border-radius: 40px; display: flex; flex-direction: column; align-items: center; padding: 25px 15px; text-align: center; box-shadow: 0 0 20px var(--glow-pink); position: relative; }
-.hidden { display: none !important; }
+:root {
+    --main-pink: #d63384;
+    --soft-pink: #ffeef1;
+    --bg-color: #ffdae0;
+}
 
-/* หน้าแรก & หน้าสอง สัดส่วนเป๊ะตามสั่ง */
-.header-img-1 { width: 125px; margin-bottom: 15px; }
-.text-group-1 { margin-bottom: 30px; }
-.title { color: var(--main-pink); font-size: 26px; }
-.heart-container { position: relative; width: 140px; height: 140px; margin-top: 15px; }
-.liquid { position: absolute; bottom: 0; width: 100%; height: 0%; background: linear-gradient(to top, #ff4d6d, #ff85a1); }
-.header-img-2 { width: 150px; margin-top: 10px; }
-
-/* หน้าสาม: Scratch Reveal */
-.scratch-container {
-    position: relative;
-    width: 240px; 
-    height: 300px;
-    margin-bottom: 15px;
-    border-radius: 20px;
+body {
+    font-family: 'Itim', cursive;
+    background-color: var(--bg-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     overflow: hidden;
 }
-#reveal-image { width: 100%; height: 100%; object-fit: cover; }
-#scratch-canvas { position: absolute; top: 0; left: 0; touch-action: none; z-index: 2; }
 
-/* ข้อความเด้งทับรูปเหมือนในคลิป */
-.overlay-text {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(255, 255, 255, 0.6); 
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    color: var(--main-pink); font-size: 18px; font-weight: bold; line-height: 1.6;
-    z-index: 5;
+.card {
+    background: white;
+    width: 88%; 
+    max-width: 320px;
+    height: 520px;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
-.btn-bottom { background-color: var(--main-pink); color: white; border: none; padding: 12px 0; border-radius: 25px; margin-top: auto; margin-bottom: 20px; width: 85%; font-family: 'Itim'; cursor: pointer; }
+.hidden { display: none !important; }
+
+/* ส่วนหัวด้านบน (Snoopy + Text) */
+.top-section {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+.snoopy-top-1 { width: 60px; margin-right: 10px; }
+.snoopy-top-2 { width: 70px; margin-right: 10px; }
+.header-text { text-align: left; }
+.main-title { color: var(--main-pink); font-size: 18px; font-weight: bold; }
+.sub-title { color: var(--main-pink); font-size: 12px; }
+
+/* ข้อความกลางหน้า */
+.page-title { color: var(--main-pink); font-size: 24px; font-weight: bold; margin-top: 10px; }
+.page-subtitle { color: var(--main-pink); font-size: 16px; margin-bottom: 20px; }
+
+/* หน้าที่ 1: หัวใจ (ตามรูป image_5a8862) */
+.heart-container { position: relative; width: 160px; height: 160px; cursor: pointer; }
+.mini-heart {
+    position: absolute; top: -10px; left: 50%;
+    transform: translateX(-50%);
+    color: var(--main-pink); font-size: 24px; z-index: 4;
+}
+.heart-outline { position: absolute; width: 100%; height: 100%; fill: none; stroke: #e91e63; stroke-width: 1.5; z-index: 3; }
+.heart-mask {
+    position: absolute; width: 100%; height: 100%; z-index: 2;
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 28.5L14.1 26.6C7.3 20.4 3 16.5 3 11.5 3 7.4 6.4 4 10.5 4c2.3 0 4.5 1.1 5.5 3 1-1.9 3.2-3 5.5-3 4.1 0 7.5 3.4 7.5 7.5 0 5-4.3 8.9-11.1 15.1L16 28.5z"/></svg>');
+    mask-size: contain; -webkit-mask-repeat: no-repeat;
+    display: flex; justify-content: center; align-items: center;
+}
+.liquid { position: absolute; bottom: 0; width: 100%; height: 0%; background-color: #f06292; transition: height 0.1s linear; }
+.liquid-label { position: relative; z-index: 5; color: white; font-size: 12px; margin-top: 40px; }
+.heg-label { position: absolute; bottom: 10px; right: 10px; color: #888; font-size: 10px; }
+.hint-text { color: var(--main-pink); font-size: 18px; margin-top: 30px; }
+
+/* หน้าที่ 2: Message Box (ตามรูป image_5a8862) */
+.message-box {
+    background-color: var(--soft-pink);
+    width: 90%; padding: 15px; border-radius: 20px;
+    position: relative; text-align: left;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.box-header { text-align: center; color: #555; font-size: 14px; margin-bottom: 10px; }
+.pink-text { color: var(--main-pink); font-weight: bold; }
+.box-content { font-size: 14px; line-height: 1.4; color: #555; min-height: 80px; }
+.btn-next-label { font-size: 10px; border: 1px solid #ff85a1; color: #ff85a1; border-radius: 5px; padding: 2px 5px; width: fit-content; margin-top: 10px; }
+
+.btn-bottom {
+    background-color: var(--main-pink);
+    color: white; border: none; padding: 10px 0; border-radius: 10px;
+    width: 60%; margin-top: 20px; cursor: pointer; font-family: 'Itim';
+}
