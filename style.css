@@ -1,12 +1,13 @@
 :root {
-    --main-pink: #d63384;
-    --soft-pink-bg: #f9f9f9;
-    --bg-color: #ffdae0;
+    --primary-pink: #d63384;
+    --soft-white: #fdfdfd;
+    --box-bg: #f9f9f9;
+    --bg-page: #ffdae0;
 }
 
 body {
     font-family: 'Itim', cursive;
-    background-color: var(--bg-color);
+    background-color: var(--bg-page);
     margin: 0;
     display: flex;
     justify-content: center;
@@ -25,69 +26,66 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 25px 15px;
+    padding: 35px 20px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 15px 35px rgba(214, 51, 132, 0.12);
 }
 
 .hidden { display: none !important; }
 
-/* --- หน้าที่ 1 --- */
-.header-img-large {
-    width: 140px; /* ขยายใหญ่ตามสั่ง */
+/* ดีไซน์หน้า 1 (ปรับตามสั่ง) */
+.header-section { margin-bottom: 20px; }
+.snoopy-hero-img { 
+    width: 155px; /* ใหญ่ขึ้นตามสั่ง */
     margin-bottom: 10px;
 }
 
-.main-title { color: var(--main-pink); font-size: 24px; font-weight: bold; }
-.sub-title { color: var(--main-pink); font-size: 15px; }
+.main-title { color: var(--primary-pink); font-size: 26px; font-weight: bold; margin: 0; }
+.sub-title { color: var(--primary-pink); font-size: 15px; margin: 0; opacity: 0.8; }
 
-.heart-container { 
+.heart-wrapper { 
     position: relative; 
-    width: 130px; 
-    height: 130px; 
+    width: 135px; 
+    height: 135px; 
+    margin-top: 55px; /* ขยับลงมาตามสั่ง */
     cursor: pointer;
-    margin-top: 40px; /* ขยับลงมาตามสั่ง */
 }
-
-.heart-outline { position: absolute; width: 100%; height: 100%; fill: none; stroke: var(--main-pink); stroke-width: 2; z-index: 3; }
-.heart-mask {
+.heart-svg { position: absolute; width: 100%; height: 100%; fill: none; stroke: var(--primary-pink); stroke-width: 2.5; z-index: 3; }
+.heart-mask-fill {
     position: absolute; width: 100%; height: 100%; z-index: 2;
     -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 28.5L14.1 26.6C7.3 20.4 3 16.5 3 11.5 3 7.4 6.4 4 10.5 4c2.3 0 4.5 1.1 5.5 3 1-1.9 3.2-3 5.5-3 4.1 0 7.5 3.4 7.5 7.5 0 5-4.3 8.9-11.1 15.1L16 28.5z"/></svg>');
     mask-size: contain; -webkit-mask-repeat: no-repeat;
 }
-.liquid { position: absolute; bottom: 0; width: 100%; height: 0%; background: #f06292; transition: height 0.1s; }
-.hint-text { color: var(--main-pink); font-size: 16px; margin-top: 25px; }
+.liquid-pink { position: absolute; bottom: 0; width: 100%; height: 0%; background: #f06292; transition: height 0.1s; }
+.guide-text { color: var(--primary-pink); font-size: 16px; margin-top: 30px; }
 
-/* --- หน้าที่ 2 --- */
-.header-img-snoopy-mail {
-    width: 130px; /* ขนาดกะทัดรัดสมดุล */
-    margin-bottom: 10px;
-}
-
+/* ดีไซน์หน้า 2 (Minimal style กู) */
+.snoopy-mail-img { width: 115px; margin-bottom: 10px; }
 .message-box-white {
-    background-color: var(--soft-pink-bg); /* กล่องขาวนวลตามคลิป */
+    background-color: var(--box-bg);
     width: 85%;
-    padding: 20px;
-    border-radius: 20px;
-    margin-top: 20px;
+    padding: 22px;
+    border-radius: 25px;
+    margin-top: 25px;
     min-height: 100px;
     text-align: left;
-    color: #555;
+    color: #444;
     font-size: 16px;
-    line-height: 1.5;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.02);
+    line-height: 1.6;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.02);
 }
 
-.btn-bottom {
-    background-color: var(--main-pink);
+.btn-primary {
+    background-color: var(--primary-pink);
     color: white;
     border: none;
-    padding: 12px 0;
-    border-radius: 25px;
+    padding: 13px 0;
+    border-radius: 30px;
     margin-top: auto;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     width: 85%;
     font-family: 'Itim';
     font-size: 17px;
     cursor: pointer;
+    box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3);
 }
