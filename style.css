@@ -1,1 +1,23 @@
+body {
+  background-color: #ffe4e1; /* สีชมพูอ่อน */
+  font-family: 'Kanit', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+button {
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
