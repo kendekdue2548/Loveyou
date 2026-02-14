@@ -207,3 +207,19 @@ function showQuizResult() {
     document.getElementById('page-quiz-result').classList.remove('hidden');
     document.getElementById('final-score').innerText = userScore; // โชว์คะแนนจริง
 }
+
+// อัปเดตฟังก์ชันเปิดเมนูต่างๆ
+function openGift(type) {
+    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden')); 
+    if (type === 'memory') {
+        document.getElementById('page-memory').classList.remove('hidden');
+        updateSlide();
+    } else if (type === 'letter') {
+        document.getElementById('page-letter').classList.remove('hidden');
+    } else if (type === 'quiz') {
+        document.getElementById('page-quiz').classList.remove('hidden');
+        loadQuiz();
+    } else if (type === 'music') {
+        document.getElementById('page-music').classList.remove('hidden'); // เปิดหน้าเพลง
+    }
+}
