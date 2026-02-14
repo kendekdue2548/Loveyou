@@ -133,8 +133,7 @@ function goToPage4() {
     document.getElementById('page4').classList.remove('hidden');
 }
 
-// --- เริ่มส่วนที่มึงสั่งเพิ่ม: ระบบความทรงจำ 3 รูป ---
-
+// --- ระบบความทรงจำ 3 รูป ---
 const memories = [
     {
         img: "https://img5.pic.in.th/file/secure-sv1/1604a70e0a529f353.jpg", 
@@ -149,16 +148,6 @@ const memories = [
 ];
 
 let currentSlide = 0;
-
-function openGift(type) {
-    if (type === 'memory') {
-        document.getElementById('page4').classList.add('hidden');
-        document.getElementById('page-memory').classList.remove('hidden');
-        updateSlide();
-    } else {
-        alert("เปิด " + type + " แล้วจ้า!");
-    }
-}
 
 function updateSlide() {
     const data = memories[currentSlide];
@@ -176,5 +165,25 @@ function changeSlide(direction) {
 
 function backToMenu() {
     document.getElementById('page-memory').classList.add('hidden');
+    document.getElementById('page4').classList.remove('hidden');
+}
+
+// --- แก้ไขฟังก์ชันเปิดเมนูและเพิ่มระบบจดหมาย ---
+function openGift(type) {
+    if (type === 'memory') {
+        document.getElementById('page4').classList.add('hidden');
+        document.getElementById('page-memory').classList.remove('hidden');
+        updateSlide();
+    } else if (type === 'letter') {
+        document.getElementById('page4').classList.add('hidden');
+        document.getElementById('page-letter').classList.remove('hidden');
+    } else {
+        alert("เปิด " + type + " แล้วจ้า!");
+    }
+}
+
+// ฟังก์ชันกลับหน้าเมนูจากหน้าจดหมาย
+function backToMenuFromLetter() {
+    document.getElementById('page-letter').classList.add('hidden');
     document.getElementById('page4').classList.remove('hidden');
 }
