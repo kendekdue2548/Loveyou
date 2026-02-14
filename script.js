@@ -1,16 +1,43 @@
-let fill = 0; let interval;
+let fill = 0; 
+let interval;
+let isFinishedTyping = false; // ตัวแปรกันข้อความขึ้นซ้ำ
 
-function startFill() { interval = setInterval(() => { if (fill < 100) { fill += 2.5; document.getElementById('liquidFill').style.height = fill + "%"; } else { clearInterval(interval); transitionToPage2(); } }, 30); }
-function stopFill() { clearInterval(interval); if (fill < 100) { fill = 0; document.getElementById('liquidFill').style.height = "0%"; } }
+function startFill() { 
+    interval = setInterval(() => { 
+        if (fill < 100) { 
+            fill += 2.5; 
+            document.getElementById('liquidFill').style.height = fill + "%"; 
+        } else { 
+            clearInterval(interval); 
+            transitionToPage2(); 
+        } 
+    }, 30); 
+}
 
-function transitionToPage2() { document.getElementById('page1').classList.add('hidden'); document.getElementById('page2').classList.remove('hidden'); startTyping(); }
+function stopFill() { 
+    clearInterval(interval); 
+    if (fill < 100) { 
+        fill = 0; 
+        document.getElementById('liquidFill').style.height = "0%"; 
+    } 
+}
+
+function transitionToPage2() { 
+    document.getElementById('page1').classList.add('hidden'); 
+    document.getElementById('page2').classList.remove('hidden'); 
+    startTyping(); 
+}
 
 async function startTyping() {
     const area = document.getElementById('typing-area');
     const messages = ["ของขวัญวาเลนไทน์ปีนี้...", "คือการมีเธออยู่ข้างๆ", "รักที่สุดเลยยย ❤️"];
     for (const msg of messages) {
-        const p = document.createElement('div'); area.appendChild(p);
-        for (const char of msg) { p.innerText += char; await new Promise(r => setTimeout(r, 85)); }
+        const p = document.createElement('div'); 
+        area.appendChild(p);
+        for (const char of msg) { 
+            p.innerText += char; 
+            await new Promise(r => setTimeout(r, 85)); 
+        }
         await new Promise(r => setTimeout(r, 450));
     }
     document.getElementById('btn-next').classList.remove('hidden');
@@ -25,11 +52,14 @@ function goToPage3() {
 function initScratch() {
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = 220; canvas.height = 280;
+    canvas.width = 220; 
+    canvas.height = 280;
     
     ctx.fillStyle = '#ff85a1'; 
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'white'; ctx.font = '18px Itim'; ctx.textAlign = 'center';
+    ctx.fillStyle = 'white'; 
+    ctx.font = '18px Itim'; 
+    ctx.textAlign = 'center';
     ctx.fillText('ขูดเพื่อดูรูปคู่เรา ❤️', 110, 140);
 
     let isDrawing = false;
@@ -39,7 +69,9 @@ function initScratch() {
         const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
         const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
         ctx.globalCompositeOperation = 'destination-out';
-        ctx.beginPath(); ctx.arc(x, y, 35, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); 
+        ctx.arc(x, y, 35, 0, Math.PI * 2); 
+        ctx.fill();
         checkProgress();
     };
 
@@ -47,8 +79,11 @@ function initScratch() {
         const data = ctx.getImageData(0, 0, 220, 280).data;
         let count = 0;
         for (let i = 3; i < data.length; i += 4) if (data[i] === 0) count++;
-        if (count > (220 * 280) * 0.45) { 
-            canvas.style.transition = "opacity 0.8s"; canvas.style.opacity = "0";
+        // ถ้าขูดเกิน 45% และยังไม่เคยทำงาน ให้เริ่มแสดงข้อความ
+        if (count > (220 * 280) * 0.45 && !isFinishedTyping) { 
+            isFinishedTyping = true; // ล็อคไว้ไม่ให้ทำงานซ้ำ
+            canvas.style.transition = "opacity 0.8s"; 
+            canvas.style.opacity = "0";
             setTimeout(() => { 
                 canvas.remove(); 
                 showFinalMessage(); 
@@ -56,33 +91,32 @@ function initScratch() {
         }
     };
 
-    // --- จุดที่แก้: พิมพ์แค่ 4 บรรทัด บรรทัดละครั้งเดียวตามคลิป ---
     async function showFinalMessage() {
         document.getElementById('scratch-hint').classList.add('hidden');
         const overlay = document.getElementById('final-message');
         overlay.classList.remove('hidden');
-        overlay.innerHTML = ""; // ล้างหน้าจอให้ว่างชัวร์ๆ ก่อนพิมพ์
+        overlay.innerHTML = ""; // เคลียร์ทุกอย่างทิ้งให้ว่างเปล่า
 
-        await new Promise(r => setTimeout(r, 1000)); // รอ 1 วิเห็นรูปชัดๆ
+        await new Promise(r => setTimeout(r, 1000)); // รอ 1 วิ
 
         const texts = [
-            "Happy Valentine Day", // บรรทัดที่ 1
-            "แค่มีเธออยู่",          // บรรทัดที่ 2
-            "ทุกวันก็พิเศษแล้ว",      // บรรทัดที่ 3
-            "น่ารักไหมคะ"         // บรรทัดที่ 4
+            "Happy Valentine Day", 
+            "แค่มีเธออยู่",          
+            "ทุกวันก็พิเศษแล้ว",      
+            "น่ารักไหมคะ"         
         ];
 
-        // พิมพ์ออกมาแค่เซ็ตเดียวจบ
+        // พิมพ์แค่ 4 บรรทัด บรรทัดละครั้งเดียวตามที่สั่ง
         for (let i = 0; i < texts.length; i++) {
             const line = document.createElement('div');
-            line.style.margin = "5px 0"; // ระยะห่างบรรทัดกำลังสวย
+            line.style.margin = "5px 0"; 
             overlay.appendChild(line);
             
             for (const char of texts[i]) {
                 line.innerText += char;
-                await new Promise(r => setTimeout(r, 90)); // ความเร็วพิมพ์ทีละตัว
+                await new Promise(r => setTimeout(r, 90)); 
             }
-            await new Promise(r => setTimeout(r, 400)); // เว้นจังหวะก่อนขึ้นบรรทัดใหม่
+            await new Promise(r => setTimeout(r, 400)); 
         }
     }
 
