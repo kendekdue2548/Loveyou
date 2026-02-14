@@ -40,8 +40,8 @@ body {
 /* แก้ไขหัวใจ: ขยับลงมา, กรอบบางลง, และตรงเป๊ะ */
 .heart-wrapper { 
     position: relative; 
-    width: 135px; 
-    height: 135px; 
+    width: 160px; 
+    height: 160px; 
     margin-top: 55px; 
     cursor: pointer;
     display: flex;
