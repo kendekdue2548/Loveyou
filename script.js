@@ -2,9 +2,9 @@ let fill = 0;
 let interval;
 let isFinishedTyping = false; 
 let isQuizAnswered = false; 
-let userScore = 0; // ตัวแปรเก็บคะแนนสำหรับหน้าสรุป
+let userScore = 0; 
 
-// --- หน้า 1: หัวใจเติมน้ำ (แก้ให้กดได้ปกติแล้ว) ---
+// --- หน้า 1: หัวใจเติมน้ำ ---
 function startFill() { 
     interval = setInterval(() => { 
         if (fill < 100) { 
@@ -54,7 +54,7 @@ function goToPage3() {
     initScratch();
 }
 
-// --- หน้า 3: หน้าขูดรูป (ระบบพิมพ์บรรทัดเดียว ไม่ซ้ำ) ---
+// --- หน้า 3: หน้าขูดรูป (แก้ไข: ขูด 80% หยุด 3 วิ) ---
 function initScratch() {
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
@@ -80,10 +80,18 @@ function initScratch() {
         const data = ctx.getImageData(0, 0, 220, 280).data;
         let count = 0;
         for (let i = 3; i < data.length; i += 4) if (data[i] === 0) count++;
-        if (count > (220 * 280) * 0.45 && !isFinishedTyping) { 
+        
+        // แก้ไข: ขูดถึง 80% แล้วค่อยผ่าน
+        if (count > (220 * 280) * 0.80 && !isFinishedTyping) { 
             isFinishedTyping = true; 
             canvas.style.transition = "opacity 0.8s"; canvas.style.opacity = "0";
-            setTimeout(() => { canvas.remove(); showFinalMessage(); }, 800);
+            setTimeout(() => { 
+                canvas.remove(); 
+                // แก้ไข: หยุดรอ 3 วินาทีให้ดูรูปก่อนพิมพ์ข้อความ
+                setTimeout(() => {
+                    showFinalMessage(); 
+                }, 3000); 
+            }, 800);
         }
     };
 
@@ -93,10 +101,10 @@ function initScratch() {
         overlay.classList.remove('hidden');
         overlay.innerHTML = ""; 
 
-        await new Promise(r => setTimeout(r, 1000)); 
         const texts = ["Happy Valentine Day", "แค่มีเธออยู่", "ทุกวันก็พิเศษแล้ว", "รูปใครน่ารักจัง"];
         for (let i = 0; i < texts.length; i++) {
             const line = document.createElement('div');
+            line.style.whiteSpace = "nowrap"; // ล็อคบรรทัดเดียว
             line.style.margin = "5px 0"; 
             overlay.appendChild(line);
             for (const char of texts[i]) {
@@ -122,6 +130,7 @@ function goToPage4() {
     document.getElementById('page4').classList.remove('hidden');
 }
 
+// --- ฟังก์ชันเปิดเมนู (อัปเดตระบบเพลง) ---
 function openGift(type) {
     document.querySelectorAll('.card').forEach(c => c.classList.add('hidden')); 
     if (type === 'memory') {
@@ -132,10 +141,19 @@ function openGift(type) {
     } else if (type === 'quiz') {
         document.getElementById('page-quiz').classList.remove('hidden');
         loadQuiz();
+    } else if (type === 'music') {
+        const musicPage = document.getElementById('page-music');
+        musicPage.classList.remove('hidden');
+        
+        // สั่งเล่นเพลงและหมุน CD ทันทีที่เข้าหน้า
+        const song = document.getElementById('bg-music');
+        const disk = document.getElementById('cd-disk');
+        song.play().catch(e => console.log("ต้องการการคลิกเพื่อเล่นเพลง")); 
+        disk.classList.add('playing');
     }
 }
 
-// --- 1. ระบบความทรงจำ (3 รูปเลื่อนได้) ---
+// --- 1. ระบบความทรงจำ ---
 const memories = [
     { img: "https://img5.pic.in.th/file/secure-sv1/1604a70e0a529f353.jpg", title: "วันแรกที่คุยกัน", desc: "ตอนนั้นไม่ได้คิดอะไรเลย แค่คุยไปเรื่อย ๆ แต่ไม่รู้ทำไมถึงจำได้จนวันนี้" },
     { img: "https://img2.pic.in.th/27140cc9efb175e5f.jpg", title: "วาเลนไทน์เดย์", desc: "ตื่นเต้นมากจนทำตัวไม่ถูก แต่เป็นวันที่ที่สุดเลย" },
@@ -153,15 +171,15 @@ function changeSlide(dir) {
     updateSlide(); 
 }
 
-// --- 2. ระบบจดหมาย ---
+// --- ระบบกลับหน้าเมนูและการรีเซ็ต ---
 function backToMenu() { 
-    currentQuiz = 0; userScore = 0; // รีเซ็ตค่า quiz เผื่อเล่นใหม่
+    currentQuiz = 0; userScore = 0;
     document.querySelectorAll('.card').forEach(c => c.classList.add('hidden')); 
     document.getElementById('page4').classList.remove('hidden'); 
 }
 function backToMenuFromLetter() { backToMenu(); }
 
-// --- 3. ระบบแบบทดสอบ (เฉลย แดง-เขียว และหน้าสรุปคะแนน) ---
+// --- 3. ระบบแบบทดสอบ ---
 const quizData = [
     { q: "เราเจอกันครั้งแรกที่ไหน?", options: ["มหาลัย", "ออนไลน์", "ร้านกาแฟ", "โรงเรียน"], answer: 1 },
     { q: "สิ่งที่เค้าชอบทำมากที่สุด?", options: ["ดูหนัง", "คุยกัน", "กินข้าว", "เล่นเกม"], answer: 3 },
@@ -190,7 +208,7 @@ function checkAnswer(idx, el) {
     document.getElementById('options-list').classList.add('answered');
     if (idx === correct) { 
         el.classList.add('correct'); 
-        userScore++; // นับคะแนน
+        userScore++; 
     } else { 
         el.classList.add('wrong'); 
         document.querySelectorAll('.option-item')[correct].classList.add('correct'); 
@@ -200,43 +218,22 @@ function nextQuiz() {
     if (!isQuizAnswered) { alert("เลือกคำตอบก่อนนะจ๊ะ!"); return; }
     currentQuiz++;
     if (currentQuiz < quizData.length) { loadQuiz(); } 
-    else { showQuizResult(); } // จบแล้วไปหน้าสรุปคะแนน
+    else { showQuizResult(); }
 }
 function showQuizResult() {
     document.getElementById('page-quiz').classList.add('hidden');
     document.getElementById('page-quiz-result').classList.remove('hidden');
-    document.getElementById('final-score').innerText = userScore; // โชว์คะแนนจริง
-}
-
-// อัปเดตฟังก์ชันเปิดเมนู
-function openGift(type) {
-    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden')); 
-    if (type === 'memory') {
-        document.getElementById('page-memory').classList.remove('hidden');
-        updateSlide();
-    } else if (type === 'letter') {
-        document.getElementById('page-letter').classList.remove('hidden');
-    } else if (type === 'quiz') {
-        document.getElementById('page-quiz').classList.remove('hidden');
-        loadQuiz();
-    } else if (type === 'music') {
-        const musicPage = document.getElementById('page-music');
-        musicPage.classList.remove('hidden');
-        
-        // สั่งเล่นเพลงและหมุน CD ทันทีที่เข้าหน้า
-        const song = document.getElementById('bg-music');
-        const disk = document.getElementById('cd-disk');
-        song.play(); 
-        disk.classList.add('playing');
-    }
+    document.getElementById('final-score').innerText = userScore;
 }
 
 // ฟังก์ชันหยุดเพลงเมื่อกดกลับเมนู
 function stopMusicAndBack() {
     const song = document.getElementById('bg-music');
     const disk = document.getElementById('cd-disk');
-    song.pause(); // หยุดเพลง
-    song.currentTime = 0; // รีเซ็ตไปเริ่มใหม่
-    disk.classList.remove('playing'); // หยุดหมุน
+    if(song) {
+        song.pause();
+        song.currentTime = 0;
+    }
+    if(disk) disk.classList.remove('playing');
     backToMenu();
 }
