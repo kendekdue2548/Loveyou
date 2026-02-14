@@ -1,7 +1,5 @@
 :root {
     --primary-pink: #d63384;
-    --soft-white: #fdfdfd;
-    --box-bg: #f9f9f9;
     --bg-page: #ffdae0;
 }
 
@@ -33,36 +31,53 @@ body {
 
 .hidden { display: none !important; }
 
-/* ดีไซน์หน้า 1 (ปรับตามสั่ง) */
+/* หน้า 1 */
 .header-section { margin-bottom: 20px; }
-.snoopy-hero-img { 
-    width: 155px; /* ใหญ่ขึ้นตามสั่ง */
-    margin-bottom: 10px;
-}
-
+.snoopy-hero-img { width: 155px; margin-bottom: 10px; } /* รูปใหญ่ตามสั่ง */
 .main-title { color: var(--primary-pink); font-size: 26px; font-weight: bold; margin: 0; }
 .sub-title { color: var(--primary-pink); font-size: 15px; margin: 0; opacity: 0.8; }
 
+/* แก้ไขหัวใจ: ขยับลงมา, กรอบบางลง, และตรงเป๊ะ */
 .heart-wrapper { 
     position: relative; 
     width: 135px; 
     height: 135px; 
-    margin-top: 55px; /* ขยับลงมาตามสั่ง */
+    margin-top: 55px; 
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.heart-svg { position: absolute; width: 100%; height: 100%; fill: none; stroke: var(--primary-pink); stroke-width: 2.5; z-index: 3; }
+
+/* แก้ให้เส้นบางลง (stroke-width: 1.5) และสีตรงกรอบเป๊ะ */
+.heart-svg { 
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    fill: none; 
+    stroke: var(--primary-pink); 
+    stroke-width: 1.5; /* เส้นบางลงตามสั่ง */
+    z-index: 3; 
+}
+
 .heart-mask-fill {
-    position: absolute; width: 100%; height: 100%; z-index: 2;
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    z-index: 2;
     -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 28.5L14.1 26.6C7.3 20.4 3 16.5 3 11.5 3 7.4 6.4 4 10.5 4c2.3 0 4.5 1.1 5.5 3 1-1.9 3.2-3 5.5-3 4.1 0 7.5 3.4 7.5 7.5 0 5-4.3 8.9-11.1 15.1L16 28.5z"/></svg>');
-    mask-size: contain; -webkit-mask-repeat: no-repeat;
+    mask-size: contain; 
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center; /* แก้ให้ตรงกลางเป๊ะ */
 }
+
 .liquid-pink { position: absolute; bottom: 0; width: 100%; height: 0%; background: #f06292; transition: height 0.1s; }
 .guide-text { color: var(--primary-pink); font-size: 16px; margin-top: 30px; }
 
-/* ดีไซน์หน้า 2 (Minimal style กู) */
+/* หน้า 2 */
 .snoopy-mail-img { width: 115px; margin-bottom: 10px; }
 .message-box-white {
-    background-color: var(--box-bg);
+    background-color: #f9f9f9;
     width: 85%;
     padding: 22px;
     border-radius: 25px;
@@ -72,7 +87,6 @@ body {
     color: #444;
     font-size: 16px;
     line-height: 1.6;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.02);
 }
 
 .btn-primary {
@@ -82,10 +96,8 @@ body {
     padding: 13px 0;
     border-radius: 30px;
     margin-top: auto;
-    margin-bottom: 10px;
     width: 85%;
     font-family: 'Itim';
     font-size: 17px;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3);
 }
