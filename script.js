@@ -1,7 +1,9 @@
 let fill = 0; 
 let interval;
 let isFinishedTyping = false; 
+let isQuizAnswered = false; // แยกตัวแปรเช็คของ Quiz ออกมา
 
+// --- หน้า 1: หัวใจเติมน้ำ (แก้ให้กดได้ปกติแล้ว) ---
 function startFill() { 
     interval = setInterval(() => { 
         if (fill < 100) { 
@@ -28,9 +30,11 @@ function transitionToPage2() {
     startTyping(); 
 }
 
+// --- หน้า 2: พิมพ์ข้อความซึ้งๆ ---
 async function startTyping() {
     const area = document.getElementById('typing-area');
     const messages = ["ของขวัญวาเลนไทน์ปีนี้...", "คือการมีเธออยู่ข้างๆ", "รักที่สุดเลยยย ❤️"];
+    area.innerHTML = ""; 
     for (const msg of messages) {
         const p = document.createElement('div'); 
         area.appendChild(p);
@@ -49,17 +53,15 @@ function goToPage3() {
     initScratch();
 }
 
+// --- หน้า 3: หน้าขูดรูป ---
 function initScratch() {
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = 220; 
-    canvas.height = 280;
+    canvas.width = 220; canvas.height = 280;
     
     ctx.fillStyle = '#ff85a1'; 
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'white'; 
-    ctx.font = '18px Itim'; 
-    ctx.textAlign = 'center';
+    ctx.fillStyle = 'white'; ctx.font = '18px Itim'; ctx.textAlign = 'center';
     ctx.fillText('ขูดเพื่อดูรูปคู่เรา ❤️', 110, 140);
 
     let isDrawing = false;
@@ -69,9 +71,7 @@ function initScratch() {
         const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
         const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
         ctx.globalCompositeOperation = 'destination-out';
-        ctx.beginPath(); 
-        ctx.arc(x, y, 35, 0, Math.PI * 2); 
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, 35, 0, Math.PI * 2); ctx.fill();
         checkProgress();
     };
 
@@ -81,12 +81,8 @@ function initScratch() {
         for (let i = 3; i < data.length; i += 4) if (data[i] === 0) count++;
         if (count > (220 * 280) * 0.45 && !isFinishedTyping) { 
             isFinishedTyping = true; 
-            canvas.style.transition = "opacity 0.8s"; 
-            canvas.style.opacity = "0";
-            setTimeout(() => { 
-                canvas.remove(); 
-                showFinalMessage(); 
-            }, 800);
+            canvas.style.transition = "opacity 0.8s"; canvas.style.opacity = "0";
+            setTimeout(() => { canvas.remove(); showFinalMessage(); }, 800);
         }
     };
 
@@ -97,26 +93,17 @@ function initScratch() {
         overlay.innerHTML = ""; 
 
         await new Promise(r => setTimeout(r, 1000)); 
-
-        const texts = [
-            "Happy Valentine Day", 
-            "แค่มีเธออยู่",          
-            "ทุกวันก็พิเศษแล้ว",      
-            "น่ารักไหมคะ"         
-        ];
-
+        const texts = ["Happy Valentine Day", "แค่มีเธออยู่", "ทุกวันก็พิเศษแล้ว", "น่ารักไหมคะ"];
         for (let i = 0; i < texts.length; i++) {
             const line = document.createElement('div');
             line.style.margin = "5px 0"; 
             overlay.appendChild(line);
-            
             for (const char of texts[i]) {
                 line.innerText += char;
                 await new Promise(r => setTimeout(r, 90)); 
             }
             await new Promise(r => setTimeout(r, 400)); 
         }
-
         document.getElementById('btn-to-menu').classList.remove('hidden');
     }
 
@@ -128,151 +115,84 @@ function initScratch() {
     canvas.addEventListener('touchmove', scratch);
 }
 
+// --- หน้า 4: เมนูหลัก ---
 function goToPage4() {
     document.getElementById('page3').classList.add('hidden');
     document.getElementById('page4').classList.remove('hidden');
 }
 
-// --- ระบบความทรงจำ 3 รูป ---
-const memories = [
-    {
-        img: "https://img5.pic.in.th/file/secure-sv1/1604a70e0a529f353.jpg", 
-        title: "วันแรกที่คุยกัน",
-        desc: "ตอนนั้นไม่ได้คิดอะไรเลย แค่คุยไปเรื่อย ๆ แต่ไม่รู้ทำไมถึงจำได้จนวันนี้"
-    },
-    {
-        img: "https://img2.pic.in.th/27140cc9efb175e5f.jpg", 
-        title: "วาเลนไทน์เดย์",
-        desc: "ตื่นเต้นมากจนทำตัวไม่ถูก แต่เป็นวันที่ที่สุดเลย"
+function openGift(type) {
+    document.getElementById('page4').classList.add('hidden');
+    if (type === 'memory') {
+        document.getElementById('page-memory').classList.remove('hidden');
+        updateSlide();
+    } else if (type === 'letter') {
+        document.getElementById('page-letter').classList.remove('hidden');
+    } else if (type === 'quiz') {
+        document.getElementById('page-quiz').classList.remove('hidden');
+        loadQuiz();
     }
+}
+
+// --- ฟังก์ชันเสริมสำหรับ ความทรงจำ, จดหมาย, แบบทดสอบ ---
+
+// 1. ความทรงจำ
+const memories = [
+    { img: "https://img5.pic.in.th/file/secure-sv1/1604a70e0a529f353.jpg", title: "วันแรกที่คุยกัน", desc: "ตอนนั้นไม่ได้คิดอะไรเลย แค่คุยไปเรื่อย ๆ แต่ไม่รู้ทำไมถึงจำได้จนวันนี้" },
+    { img: "https://img2.pic.in.th/27140cc9efb175e5f.jpg", title: "วาเลนไทน์เดย์", desc: "ตื่นเต้นมากจนทำตัวไม่ถูก แต่เป็นวันที่ที่สุดเลย" }
 ];
-
 let currentSlide = 0;
-
 function updateSlide() {
     const data = memories[currentSlide];
     document.getElementById('memory-img').src = data.img;
     document.getElementById('memory-title').innerText = data.title;
     document.getElementById('memory-desc').innerText = data.desc;
 }
-
-function changeSlide(direction) {
-    currentSlide += direction;
-    if (currentSlide < 0) currentSlide = memories.length - 1;
-    if (currentSlide >= memories.length) currentSlide = 0;
-    updateSlide();
+function changeSlide(dir) { 
+    currentSlide = (currentSlide + dir + memories.length) % memories.length; 
+    updateSlide(); 
+}
+function backToMenu() { 
+    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden')); 
+    document.getElementById('page4').classList.remove('hidden'); 
 }
 
-function backToMenu() {
-    document.getElementById('page-memory').classList.add('hidden');
-    document.getElementById('page4').classList.remove('hidden');
-}
+// 2. จดหมาย
+function backToMenuFromLetter() { backToMenu(); }
 
-// --- แก้ไขฟังก์ชันเปิดเมนูและเพิ่มระบบจดหมาย ---
-function openGift(type) {
-    if (type === 'memory') {
-        document.getElementById('page4').classList.add('hidden');
-        document.getElementById('page-memory').classList.remove('hidden');
-        updateSlide();
-    } else if (type === 'letter') {
-        document.getElementById('page4').classList.add('hidden');
-        document.getElementById('page-letter').classList.remove('hidden');
-    } else {
-        alert("เปิด " + type + " แล้วจ้า!");
-    }
-}
-
-
-// ข้อมูลคำถาม 5 ข้อ
+// 3. แบบทดสอบ (พร้อมระบบสี แดง-เขียว)
 const quizData = [
-    // ข้อมูลคำถาม 5 ข้อ พร้อมเฉลยตามที่มึงสั่ง
-const quizData = [
-    {
-        q: "เราเจอกันครั้งแรกที่ไหน?",
-        options: ["มหาลัย", "ออนไลน์", "ร้านกาแฟ", "โรงเรียน"],
-        answer: 1 // เฉลย: ออนไลน์
-    },
-    {
-        q: "สิ่งที่เค้าชอบทำมากที่สุด?",
-        options: ["ดูหนัง", "คุยกัน", "กินข้าว", "เล่นเกม"],
-        answer: 3 // เฉลย: เล่นเกม (ลำดับที่ 4 คือเลข 3)
-    },
-    {
-        q: "เวลาเหนื่อย เราอยากอยู่กับใคร?",
-        options: ["เพื่อน", "ตัวเอง", "เธอ", "ใครก็ได้"],
-        answer: 2 // เฉลย: เธอ
-    },
-    {
-        q: "ของขวัญที่ดีที่สุดคืออะไร?",
-        options: ["เงิน", "ของแพง", "เวลา", "คำหวาน"],
-        answer: 3 // เฉลย: คำหวาน (ลำดับที่ 4 คือเลข 3)
-    },
-    {
-        q: "เค้าชอบเหม๋อที่ไหนที่สุด?",
-        options: ["AFK", "เลเบลล่าง", "เลนน้ำเงิน", "เลเบลบน"],
-        answer: 1 // เฉลย: เลเบลล่าง
-    }
+    { q: "เราเจอกันครั้งแรกที่ไหน?", options: ["มหาลัย", "ออนไลน์", "ร้านกาแฟ", "โรงเรียน"], answer: 1 },
+    { q: "สิ่งที่เค้าชอบทำมากที่สุด?", options: ["ดูหนัง", "คุยกัน", "กินข้าว", "เล่นเกม"], answer: 3 },
+    { q: "เวลาเหนื่อย เราอยากอยู่กับใคร?", options: ["เพื่อน", "ตัวเอง", "เธอ", "ใครก็ได้"], answer: 2 },
+    { q: "ของขวัญที่ดีที่สุดคืออะไร?", options: ["เงิน", "ของแพง", "เวลา", "คำหวาน"], answer: 3 },
+    { q: "เค้าชอบเหม๋อที่ไหนที่สุด?", options: ["AFK", "เลเบลล่าง", "เลนน้ำเงิน", "เลเบลบน"], answer: 1 }
 ];
-
 let currentQuiz = 0;
-
-// แก้ไขฟังก์ชัน openGift เพื่อรองรับหน้า Quiz
-function openGift(type) {
-    if (type === 'memory') {
-        document.getElementById('page4').classList.add('hidden');
-        document.getElementById('page-memory').classList.remove('hidden');
-        updateSlide();
-    } else if (type === 'letter') {
-        document.getElementById('page4').classList.add('hidden');
-        document.getElementById('page-letter').classList.remove('hidden');
-    } else if (type === 'quiz') {
-        document.getElementById('page4').classList.add('hidden');
-        document.getElementById('page-quiz').classList.remove('hidden');
-        loadQuiz();
-    }
-}
-
 function loadQuiz() {
+    isQuizAnswered = false;
     const data = quizData[currentQuiz];
     document.getElementById('quiz-progress').innerText = `ข้อที่ ${currentQuiz + 1} / 5`;
     document.getElementById('question-text').innerText = data.q;
-    
-    const optionsList = document.getElementById('options-list');
-    optionsList.innerHTML = "";
-    
-    data.options.forEach(opt => {
-        const div = document.createElement('div');
-        div.className = "option-item";
-        div.innerText = opt;
-        div.onclick = function() {
-            // ลบ class selected จากตัวอื่นก่อน
-            document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
-            this.classList.add('selected');
-        };
-        optionsList.appendChild(div);
+    const list = document.getElementById('options-list');
+    list.innerHTML = ""; list.classList.remove('answered');
+    data.options.forEach((opt, idx) => {
+        const div = document.createElement('div'); div.className = "option-item";
+        div.innerText = opt; div.onclick = () => checkAnswer(idx, div);
+        list.appendChild(div);
     });
 }
-
-function nextQuiz() {
-    // เช็คว่าเลือกคำตอบหรือยัง
-    if (!document.querySelector('.option-item.selected')) {
-        alert("เลือกคำตอบก่อนนะจ๊ะ!");
-        return;
-    }
-
-    currentQuiz++;
-    if (currentQuiz < quizData.length) {
-        loadQuiz();
-    } else {
-        alert("เก่งมาก! รู้จักเราดีที่สุดเลย ❤️");
-        currentQuiz = 0; // รีเซ็ตเผื่อเล่นใหม่
-        document.getElementById('page-quiz').classList.add('hidden');
-        document.getElementById('page4').classList.remove('hidden');
-    }
+function checkAnswer(idx, el) {
+    if (isQuizAnswered) return;
+    isQuizAnswered = true;
+    const correct = quizData[currentQuiz].answer;
+    document.getElementById('options-list').classList.add('answered');
+    if (idx === correct) { el.classList.add('correct'); } 
+    else { el.classList.add('wrong'); document.querySelectorAll('.option-item')[correct].classList.add('correct'); }
 }
-
-// ฟังก์ชันกลับหน้าเมนูจากหน้าจดหมาย
-function backToMenuFromLetter() {
-    document.getElementById('page-letter').classList.add('hidden');
-    document.getElementById('page4').classList.remove('hidden');
+function nextQuiz() {
+    if (!isQuizAnswered) { alert("เลือกคำตอบก่อนนะจ๊ะ!"); return; }
+    currentQuiz++;
+    if (currentQuiz < quizData.length) { loadQuiz(); } 
+    else { alert("เก่งมาก! รู้จักเราดีที่สุดเลย ❤️"); currentQuiz = 0; backToMenu(); }
 }
