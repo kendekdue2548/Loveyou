@@ -29,12 +29,7 @@ function transitionToPage2() {
 
 async function startTyping() {
     const area = document.getElementById('typing-area');
-    const messages = [
-        "ของขวัญวาเลนไทน์ปีนี้...",
-        "คือการมีเธออยู่ข้างๆ",
-        "รักที่สุดเลยยย ❤️"
-    ];
-    
+    const messages = ["ของขวัญวาเลนไทน์ปีนี้...", "คือการมีเธออยู่ข้างๆ", "รักที่สุดเลยยย ❤️"];
     for (const msg of messages) {
         const p = document.createElement('div');
         area.appendChild(p);
@@ -48,5 +43,5 @@ async function startTyping() {
 }
 
 function goToPage3() {
-    // เตรียมไว้สำหรับหน้าขูดรูป
+    // ไว้ต่อหน้าขูดรูป
 }
