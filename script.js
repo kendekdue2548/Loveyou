@@ -208,7 +208,7 @@ function showQuizResult() {
     document.getElementById('final-score').innerText = userScore; // โชว์คะแนนจริง
 }
 
-// อัปเดตฟังก์ชันเปิดเมนูต่างๆ
+// อัปเดตฟังก์ชันเปิดเมนู
 function openGift(type) {
     document.querySelectorAll('.card').forEach(c => c.classList.add('hidden')); 
     if (type === 'memory') {
@@ -220,6 +220,23 @@ function openGift(type) {
         document.getElementById('page-quiz').classList.remove('hidden');
         loadQuiz();
     } else if (type === 'music') {
-        document.getElementById('page-music').classList.remove('hidden'); // เปิดหน้าเพลง
+        const musicPage = document.getElementById('page-music');
+        musicPage.classList.remove('hidden');
+        
+        // สั่งเล่นเพลงและหมุน CD ทันทีที่เข้าหน้า
+        const song = document.getElementById('bg-music');
+        const disk = document.getElementById('cd-disk');
+        song.play(); 
+        disk.classList.add('playing');
     }
+}
+
+// ฟังก์ชันหยุดเพลงเมื่อกดกลับเมนู
+function stopMusicAndBack() {
+    const song = document.getElementById('bg-music');
+    const disk = document.getElementById('cd-disk');
+    song.pause(); // หยุดเพลง
+    song.currentTime = 0; // รีเซ็ตไปเริ่มใหม่
+    disk.classList.remove('playing'); // หยุดหมุน
+    backToMenu();
 }
