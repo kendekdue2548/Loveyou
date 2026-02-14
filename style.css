@@ -140,3 +140,19 @@ body { font-family: 'Itim', cursive; background-color: var(--bg-page); margin: 0
     background-color: var(--primary-pink);
     color: white;
 }
+
+/* สีสำหรับเฉลยคำตอบ */
+.option-item.correct {
+    background-color: #28a745 !important; /* สีเขียว */
+    color: white !important;
+}
+
+.option-item.wrong {
+    background-color: #dc3545 !important; /* สีแดง */
+    color: white !important;
+}
+
+/* ปิดการคลิกหลังจากตอบแล้วเพื่อกันรวน */
+.options-container.answered {
+    pointer-events: none;
+}
