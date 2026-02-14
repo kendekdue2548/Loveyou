@@ -236,3 +236,13 @@ body { font-family: 'Itim', cursive; background-color: var(--bg-page); margin: 0
     font-size: 17px;
     cursor: pointer;
 }
+
+/* ทำให้แผ่น CD หมุนเฉพาะตอนมี Class 'playing' */
+.cd-disk.playing {
+    animation: rotateCD 8s linear infinite;
+}
+
+@keyframes rotateCD {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
