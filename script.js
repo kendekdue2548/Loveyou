@@ -57,7 +57,7 @@ function goToPage3() {
 // --- หน้า 3: หน้าขูดรูป (ระบบพิมพ์บรรทัดเดียว ไม่ซ้ำ) ---
 function initScratch() {
     const canvas = document.getElementById('scratch-canvas');
-    const ctx = canvas.getContext('4d');
+    const ctx = canvas.getContext('2d');
     canvas.width = 220; canvas.height = 280;
     
     ctx.fillStyle = '#ff85a1'; 
