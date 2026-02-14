@@ -117,7 +117,6 @@ function initScratch() {
             await new Promise(r => setTimeout(r, 400)); 
         }
 
-        // --- แก้ไขจุดนี้: สั่งให้ปุ่มที่อยู่ด้านล่าง Card แสดงตัวออกมา ---
         document.getElementById('btn-to-menu').classList.remove('hidden');
     }
 
@@ -129,12 +128,53 @@ function initScratch() {
     canvas.addEventListener('touchmove', scratch);
 }
 
-// ฟังก์ชันสำหรับหน้า 4 (เมนู)
 function goToPage4() {
     document.getElementById('page3').classList.add('hidden');
     document.getElementById('page4').classList.remove('hidden');
 }
 
+// --- เริ่มส่วนที่มึงสั่งเพิ่ม: ระบบความทรงจำ 3 รูป ---
+
+const memories = [
+    {
+        img: "https://img5.pic.in.th/file/secure-sv1/1604a70e0a529f353.jpg", 
+        title: "วันแรกที่คุยกัน",
+        desc: "ตอนนั้นไม่ได้คิดอะไรเลย แค่คุยไปเรื่อย ๆ แต่ไม่รู้ทำไมถึงจำได้จนวันนี้"
+    },
+    {
+        img: "https://img2.pic.in.th/27140cc9efb175e5f.jpg", 
+        title: "วาเลนไทน์เดย์",
+        desc: "ตื่นเต้นมากจนทำตัวไม่ถูก แต่เป็นวันที่ที่สุดเลย"
+    }
+];
+
+let currentSlide = 0;
+
 function openGift(type) {
-    alert("เปิด " + type + " แล้วจ้า!");
+    if (type === 'memory') {
+        document.getElementById('page4').classList.add('hidden');
+        document.getElementById('page-memory').classList.remove('hidden');
+        updateSlide();
+    } else {
+        alert("เปิด " + type + " แล้วจ้า!");
+    }
+}
+
+function updateSlide() {
+    const data = memories[currentSlide];
+    document.getElementById('memory-img').src = data.img;
+    document.getElementById('memory-title').innerText = data.title;
+    document.getElementById('memory-desc').innerText = data.desc;
+}
+
+function changeSlide(direction) {
+    currentSlide += direction;
+    if (currentSlide < 0) currentSlide = memories.length - 1;
+    if (currentSlide >= memories.length) currentSlide = 0;
+    updateSlide();
+}
+
+function backToMenu() {
+    document.getElementById('page-memory').classList.add('hidden');
+    document.getElementById('page4').classList.remove('hidden');
 }
