@@ -1,13 +1,144 @@
-<div id="login-page">
-  <h2>กรอกรหัสผ่าน</h2>
-  <input type="password" id="passcode" placeholder="123456">
-  <button onclick="checkPasscode()">ยืนยัน</button>
-</div>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Valentine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* --- จุดที่ 1: แก้ไขโทนสีและพื้นหลังที่นี่ --- */
+        :root {
+            --primary-pink: #ff6b81;
+            --bg-color: #ffe4e1;
+            --card-white: rgba(255, 255, 255, 0.9);
+        }
 
-<div id="main-menu" style="display:none;">
-  <h2>เลือกเมนู</h2>
-  <div class="menu-grid">
-    <button onclick="showStory()">ความทรงจำ</button>
-    <button onclick="showLetter()">จดหมาย</button>
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            background: var(--card-white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .hidden { display: none; }
+
+        /* การตกแต่งปุ่ม */
+        button {
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        /* เมนู Grid แบบในคลิป */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .menu-item {
+            background: #fff;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #ffe4e1;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="page1" class="container">
+        <h2 style="color: var(--primary-pink);">❤️ My Valentine</h2>
+        <p>สำหรับคนพิเศษของผม</p>
+        <input type="password" id="passInput" placeholder="กรอกรหัสผ่าน (1234)">
+        <button onclick="checkPass()">ตกลง</button>
     </div>
-</div>
+
+    <div id="page2" class="container hidden">
+        <h3>เลือกเมนู</h3>
+        <div class="menu-grid">
+            <div class="menu-item" onclick="showContent('ความทรงจำ')">📸 ความทรงจำ</div>
+            <div class="menu-item" onclick="showContent('จดหมาย')">✉️ จดหมาย</div>
+            <div class="menu-item" onclick="alert('ไปเขียนควิซเพิ่มนะ!')">📝 แบบทดสอบ</div>
+            <div class="menu-item" onclick="alert('ไปใส่เพลงเพิ่มนะ!')">🎵 เพลงของเรา</div>
+        </div>
+    </div>
+
+    <div id="page3" class="container hidden">
+        <div id="contentDisplay"></div>
+        <button onclick="goBack()">กลับหน้าเมนู</button>
+    </div>
+
+    <script>
+        // --- จุดที่ 2: แก้ไขรหัสผ่านที่นี่ ---
+        function checkPass() {
+            const pass = document.getElementById('passInput').value;
+            if(pass === '1234') { 
+                nextPage('page1', 'page2');
+            } else {
+                alert('รหัสผิดนะเจ้าตัวแสบ!');
+            }
+        }
+
+        function nextPage(oldPage, newPage) {
+            document.getElementById(oldPage).classList.add('hidden');
+            document.getElementById(newPage).classList.remove('hidden');
+        }
+
+        function showContent(type) {
+            const display = document.getElementById('contentDisplay');
+            // --- จุดที่ 3: แก้ไขเนื้อหาข้อความ/รูปภาพตรงนี้ ---
+            if(type === 'ความทรงจำ') {
+                display.innerHTML = `
+                    <h3>ความทรงจำของเรา</h3>
+                    <img src="https://via.placeholder.com/200" style="width:100%; border-radius:10px;">
+                    <p>วันที่เราเจอกันครั้งแรก...</p>
+                `;
+            } else if(type === 'จดหมาย') {
+                display.innerHTML = `
+                    <h3>ถึง...คนเก่ง</h3>
+                    <p>ขอบคุณที่อยู่ข้างกันนะ รักมากๆ เลย</p>
+                `;
+            }
+            nextPage('page2', 'page3');
+        }
+
+        function goBack() {
+            nextPage('page3', 'page2');
+        }
+    </script>
+</body>
+</html>
