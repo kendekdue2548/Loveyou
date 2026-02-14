@@ -79,9 +79,8 @@ function initScratch() {
         const data = ctx.getImageData(0, 0, 220, 280).data;
         let count = 0;
         for (let i = 3; i < data.length; i += 4) if (data[i] === 0) count++;
-        // ถ้าขูดเกิน 45% และยังไม่เคยทำงาน ให้เริ่มแสดงข้อความ
         if (count > (220 * 280) * 0.45 && !isFinishedTyping) { 
-            isFinishedTyping = true; // ล็อคไว้ไม่ให้ทำงานซ้ำ
+            isFinishedTyping = true; 
             canvas.style.transition = "opacity 0.8s"; 
             canvas.style.opacity = "0";
             setTimeout(() => { 
@@ -95,9 +94,9 @@ function initScratch() {
         document.getElementById('scratch-hint').classList.add('hidden');
         const overlay = document.getElementById('final-message');
         overlay.classList.remove('hidden');
-        overlay.innerHTML = ""; // เคลียร์ทุกอย่างทิ้งให้ว่างเปล่า
+        overlay.innerHTML = ""; 
 
-        await new Promise(r => setTimeout(r, 1000)); // รอ 1 วิ
+        await new Promise(r => setTimeout(r, 1000)); 
 
         const texts = [
             "Happy Valentine Day", 
@@ -106,7 +105,6 @@ function initScratch() {
             "น่ารักไหมคะ"         
         ];
 
-        // พิมพ์แค่ 4 บรรทัด บรรทัดละครั้งเดียวตามที่สั่ง
         for (let i = 0; i < texts.length; i++) {
             const line = document.createElement('div');
             line.style.margin = "5px 0"; 
@@ -118,6 +116,17 @@ function initScratch() {
             }
             await new Promise(r => setTimeout(r, 400)); 
         }
+
+        // --- แก้ไขจุดนี้: สร้างปุ่มไปหน้าเมนู (หน้า 4) หลังจากพิมพ์จบ ---
+        const btnNext = document.createElement('button');
+        btnNext.className = "btn-primary";
+        btnNext.style.marginTop = "15px";
+        btnNext.innerText = "ไปหน้าเมนู ❤️";
+        btnNext.onclick = () => {
+            document.getElementById('page3').classList.add('hidden');
+            document.getElementById('page4').classList.remove('hidden');
+        };
+        overlay.appendChild(btnNext);
     }
 
     canvas.addEventListener('mousedown', () => isDrawing = true);
@@ -126,4 +135,10 @@ function initScratch() {
     canvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
     canvas.addEventListener('touchend', () => isDrawing = false);
     canvas.addEventListener('touchmove', scratch);
+}
+
+// ฟังก์ชันสำหรับหน้า 4 (มึงเอาไว้ใช้เชื่อมต่อเมนูต่างๆ)
+function openGift(type) {
+    // ใส่ตรรกะหน้าย่อยของแต่ละเมนูตรงนี้
+    alert("เปิด " + type + " แล้วจ้า!");
 }
