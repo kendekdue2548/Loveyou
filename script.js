@@ -16,7 +16,6 @@ async function startTyping() {
     document.getElementById('btn-next').classList.remove('hidden');
 }
 
-// ระบบหน้า 3: ขูดแล้วเด้งข้อความ
 function goToPage3() {
     document.getElementById('page2').classList.add('hidden');
     document.getElementById('page3').classList.remove('hidden');
@@ -28,7 +27,7 @@ function initScratch() {
     const ctx = canvas.getContext('2d');
     canvas.width = 220; canvas.height = 280;
     
-    ctx.fillStyle = '#ff85a1'; // แผ่นขูดสีชมพู
+    ctx.fillStyle = '#ff85a1'; 
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = 'white'; ctx.font = '18px Itim'; ctx.textAlign = 'center';
     ctx.fillText('ขูดเพื่อดูรูปคู่เรา ❤️', 110, 140);
@@ -48,38 +47,39 @@ function initScratch() {
         const data = ctx.getImageData(0, 0, 220, 280).data;
         let count = 0;
         for (let i = 3; i < data.length; i += 4) if (data[i] === 0) count++;
-        if (count > (220 * 280) * 0.45) { // ขูดเกิน 45% ถือว่าเสร็จ
+        if (count > (220 * 280) * 0.45) { 
             canvas.style.transition = "opacity 0.8s"; canvas.style.opacity = "0";
             setTimeout(() => { canvas.remove(); showFinalMessage(); }, 800);
         }
     };
 
-    // --- จุดที่แก้ไข: พิมพ์ 4 บรรทัดรวดเดียวตามสั่ง ---
+    // --- แก้ไขตรงนี้: พิมพ์แค่บรรทัดละครั้ง เรียงกัน 4 บรรทัดจบ ---
     async function showFinalMessage() {
         document.getElementById('scratch-hint').classList.add('hidden');
         const overlay = document.getElementById('final-message');
         overlay.classList.remove('hidden');
-        overlay.innerHTML = ""; // ล้างค่าเผื่อไว้
+        overlay.innerHTML = ""; // ล้างหน้าจอให้ว่าง
 
-        await new Promise(r => setTimeout(r, 1000)); // รอ 1 วิ ตามคลิป
+        await new Promise(r => setTimeout(r, 1000)); // รอ 1 วิเห็นรูปชัดๆ
 
         const texts = [
-            "Happy Valentine Day", // บรรทัดแรก
-            "แค่มีเธออยู่",          // บรรทัดสอง
-            "ทุกวันก็พิเศษแล้ว",      // บรรทัดสาม
-            "น่ารักไหมคะ"         // บรรทัดสี่
+            "Happy Valentine Day", 
+            "แค่มีเธออยู่",          
+            "ทุกวันก็พิเศษแล้ว",      
+            "น่ารักไหมคะ"         
         ];
 
+        // วนลูปพิมพ์แค่ 4 บรรทัด บรรทัดละ 1 รอบเท่านั้น
         for (let i = 0; i < texts.length; i++) {
             const line = document.createElement('div');
+            line.style.margin = "8px 0"; // ระยะห่างกำลังดีไม่ให้ติดกัน
             overlay.appendChild(line);
+            
             for (const char of texts[i]) {
                 line.innerText += char;
-                await new Promise(r => setTimeout(r, 100)); // ความเร็วพิมพ์ทีละตัว
+                await new Promise(r => setTimeout(r, 90)); // ความเร็วพิมพ์ทีละตัว
             }
-            if (i < texts.length - 1) {
-                await new Promise(r => setTimeout(r, 400)); // เว้นจังหวะก่อนขึ้นบรรทัดใหม่
-            }
+            await new Promise(r => setTimeout(r, 400)); // จังหวะพักก่อนขึ้นบรรทัดใหม่
         }
     }
 
