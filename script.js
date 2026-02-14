@@ -157,7 +157,6 @@ function openGift(type) {
 const memories = [
     { img: "https://img5.pic.in.th/file/secure-sv1/1604a70e0a529f353.jpg", title: "วันแรกที่คุยกัน", desc: "ตอนนั้นไม่ได้คิดอะไรเลย แค่คุยไปเรื่อย ๆ แต่ไม่รู้ทำไมถึงจำได้จนวันนี้" },
     { img: "https://img2.pic.in.th/27140cc9efb175e5f.jpg", title: "วาเลนไทน์เดย์", desc: "ตื่นเต้นมากจนทำตัวไม่ถูก แต่เป็นวันที่ดีที่สุดเลย" },
-    { img: "https://via.placeholder.com/300x400?text=Memory+3", title: "ทริปของเรา", desc: "มีความสุขทุกครั้งที่ได้ไปเที่ยวด้วยกันนะ" }
 ];
 let currentSlide = 0;
 function updateSlide() {
