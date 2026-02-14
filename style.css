@@ -89,3 +89,54 @@ body { font-family: 'Itim', cursive; background-color: var(--bg-page); margin: 0
     text-align: right;
     margin: 0;
 }
+
+/* หน้าแบบทดสอบ */
+.quiz-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.question-box {
+    width: 90%;
+    background-color: #f9f9f9;
+    border: 2px dashed #ffdae0; /* เส้นประตามรูป */
+    border-radius: 20px;
+    padding: 20px 15px;
+    margin-bottom: 20px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#question-text {
+    color: #555;
+    font-size: 16px;
+    margin: 0;
+}
+
+.options-container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-item {
+    background-color: #fdfdfd;
+    border-radius: 15px;
+    padding: 12px;
+    color: #888;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    transition: all 0.2s;
+}
+
+/* สไตล์เมื่อกดเลือกตัวเลือก */
+.option-item.selected {
+    background-color: var(--primary-pink);
+    color: white;
+}
