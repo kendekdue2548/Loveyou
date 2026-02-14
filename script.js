@@ -37,8 +37,8 @@ function initScratch() {
     const scratch = (e) => {
         if (!isDrawing) return;
         const rect = canvas.getBoundingClientRect();
-        const x = (e.clientX || e.touches[0].clientX) - rect.left;
-        const y = (e.clientY || e.touches[0].clientY) - rect.top;
+        const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+        const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
         ctx.globalCompositeOperation = 'destination-out';
         ctx.beginPath(); ctx.arc(x, y, 35, 0, Math.PI * 2); ctx.fill();
         checkProgress();
@@ -54,18 +54,32 @@ function initScratch() {
         }
     };
 
+    // --- จุดที่แก้ไข: พิมพ์ 4 บรรทัดรวดเดียวตามสั่ง ---
     async function showFinalMessage() {
         document.getElementById('scratch-hint').classList.add('hidden');
         const overlay = document.getElementById('final-message');
         overlay.classList.remove('hidden');
-        
+        overlay.innerHTML = ""; // ล้างค่าเผื่อไว้
+
         await new Promise(r => setTimeout(r, 1000)); // รอ 1 วิ ตามคลิป
-        
-        const texts = ["Happy Valentine Day", "แค่มีเธออยู่", "ทุกวันก็พิเศษแล้ว", "น่ารักไหมคะ"];
-        for (const t of texts) {
-            const div = document.createElement('div'); overlay.appendChild(div);
-            for (const c of t) { div.innerText += c; await new Promise(r => setTimeout(r, 100)); }
-            await new Promise(r => setTimeout(r, 500));
+
+        const texts = [
+            "Happy Valentine Day", // บรรทัดแรก
+            "แค่มีเธออยู่",          // บรรทัดสอง
+            "ทุกวันก็พิเศษแล้ว",      // บรรทัดสาม
+            "น่ารักไหมคะ"         // บรรทัดสี่
+        ];
+
+        for (let i = 0; i < texts.length; i++) {
+            const line = document.createElement('div');
+            overlay.appendChild(line);
+            for (const char of texts[i]) {
+                line.innerText += char;
+                await new Promise(r => setTimeout(r, 100)); // ความเร็วพิมพ์ทีละตัว
+            }
+            if (i < texts.length - 1) {
+                await new Promise(r => setTimeout(r, 400)); // เว้นจังหวะก่อนขึ้นบรรทัดใหม่
+            }
         }
     }
 
