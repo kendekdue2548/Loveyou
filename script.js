@@ -1,4 +1,5 @@
-let fill = 0; let interval;
+let fill = 0;
+let interval;
 
 function startFill() {
     interval = setInterval(() => {
@@ -39,13 +40,13 @@ async function startTyping() {
         area.appendChild(p);
         for (const char of msg) {
             p.innerText += char;
-            await new Promise(r => setTimeout(r, 80)); // ความเร็วพิมพ์
+            await new Promise(r => setTimeout(r, 85));
         }
-        await new Promise(r => setTimeout(r, 400)); // เว้นวรรคบรรทัด
+        await new Promise(r => setTimeout(r, 450));
     }
     document.getElementById('btn-next').classList.remove('hidden');
 }
 
 function goToPage3() {
-    // เตรียมไว้สำหรับหน้ารูปขูดที่มึงพักไว้
+    // เตรียมไว้สำหรับหน้าขูดรูป
 }
