@@ -174,3 +174,65 @@ body { font-family: 'Itim', cursive; background-color: var(--bg-page); margin: 0
 #final-score {
     font-size: 24px;
 }
+
+/* หน้าเพลงของเรา */
+.cd-player {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.cd-disk {
+    width: 180px;
+    height: 180px;
+    background: #222; /* สีแผ่น CD */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: rotateCD 8s linear infinite; /* ทำให้แผ่นหมุนตลอดเวลา */
+}
+
+@keyframes rotateCD {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.cd-center {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #333;
+}
+
+.cd-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* รูปกลาง CD */
+}
+
+.music-message {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    color: #d63384;
+    line-height: 1.6;
+    margin: 20px 0;
+    width: 90%;
+}
+
+.btn-secondary-pink {
+    background-color: #ffdae0;
+    color: #d63384;
+    border: none;
+    padding: 13px 0;
+    border-radius: 30px;
+    width: 100%;
+    font-family: 'Itim';
+    font-size: 17px;
+    cursor: pointer;
+}
