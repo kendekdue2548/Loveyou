@@ -124,6 +124,20 @@
     <button id="btn-next-quiz" class="btn-primary" style="margin-top: auto; margin-bottom: 10px;" onclick="nextQuiz()">ข้อต่อไป</button>
 </div>
 
+    <div id="page-quiz-result" class="card hidden">
+    <div class="main-title" style="font-size: 22px; margin-bottom: 20px;">คะแนนของเธอ</div>
+    
+    <div class="result-container">
+        <img src="https://img2.pic.in.th/77864c8aa4d30606a522b8566e720f933.png" class="heart-result-img">
+        
+        <div class="score-text">
+            เธอได้ <span id="final-score">0</span> / 5 คะแนน
+        </div>
+    </div>
+
+    <button class="btn-primary" style="margin-top: auto; margin-bottom: 10px;" onclick="backToMenu()">กลับไปหน้าเมนู</button>
+</div>
+
     <script src="script.js"></script>
 </body>
 </html>
