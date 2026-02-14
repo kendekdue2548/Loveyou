@@ -34,7 +34,7 @@ function transitionToPage2() {
 // --- หน้า 2: พิมพ์ข้อความซึ้งๆ ---
 async function startTyping() {
     const area = document.getElementById('typing-area');
-    const messages = ["ของขวัญวาเลนไทน์ปีนี้...", "คือการมีเธออยู่ข้างๆ", "รักที่สุดเลยยย ❤️"];
+    const messages = ["ของขวัญวาเลนไทน์ปีนี้", "คือการมีเธออยู่ข้างๆ", "รักที่สุดเลยยย ❤️"];
     area.innerHTML = ""; 
     for (const msg of messages) {
         const p = document.createElement('div'); 
@@ -57,13 +57,13 @@ function goToPage3() {
 // --- หน้า 3: หน้าขูดรูป (ระบบพิมพ์บรรทัดเดียว ไม่ซ้ำ) ---
 function initScratch() {
     const canvas = document.getElementById('scratch-canvas');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('4d');
     canvas.width = 220; canvas.height = 280;
     
     ctx.fillStyle = '#ff85a1'; 
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = 'white'; ctx.font = '18px Itim'; ctx.textAlign = 'center';
-    ctx.fillText('ขูดเพื่อดูรูปคู่เรา ❤️', 110, 140);
+    ctx.fillText('ขูดเพื่อดูรูปคะ ❤️', 110, 140);
 
     let isDrawing = false;
     const scratch = (e) => {
@@ -94,7 +94,7 @@ function initScratch() {
         overlay.innerHTML = ""; 
 
         await new Promise(r => setTimeout(r, 1000)); 
-        const texts = ["Happy Valentine Day", "แค่มีเธออยู่", "ทุกวันก็พิเศษแล้ว", "น่ารักไหมคะ"];
+        const texts = ["Happy Valentine Day", "แค่มีเธออยู่", "ทุกวันก็พิเศษแล้ว", "รูปใครน่ารักจัง"];
         for (let i = 0; i < texts.length; i++) {
             const line = document.createElement('div');
             line.style.margin = "5px 0"; 
