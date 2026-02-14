@@ -142,23 +142,26 @@
     <div class="main-title" style="font-size: 22px; margin-bottom: 5px;">เพลงของเรา</div>
     <div class="sub-title" style="font-size: 14px; margin-bottom: 20px;">เพลงนี้อยากให้เธอฟัง</div>
     
+    <audio id="bg-music" loop>
+        <source src="your-song.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="music-container">
         <div class="cd-player">
-            <div class="cd-disk">
+            <div class="cd-disk" id="cd-disk">
                 <div class="cd-center">
                     <img src="https://img5.pic.in.th/file/secure-sv1/15b9470bc66ac0ce38d3c845299e5843.jpg" class="cd-img">
                 </div>
             </div>
         </div>
-
         <div class="music-message">
             เพลงนี้อาจไม่ได้พิเศษสำหรับใครแต่สำหรับเรามันคือทุกความรู้สึกที่มีให้เธอ
         </div>
     </div>
 
     <div class="music-btns">
-        <a href="https://www.youtube.com/watch?v=h2VIUdst5y4" target="_blank" class="btn-primary" style="text-decoration: none; display: block; margin-bottom: 10px;">เปิดเพลงนี้บน YouTube</a>
-        <button class="btn-secondary-pink" onclick="backToMenu()">กลับไปหน้าเมนู</button>
+        <a href="https://www.youtube.com/watch?v=h2VIUdst5y4" target="_blank" class="btn-primary" style="text-decoration: none; display: block; margin-bottom: 10px;">ดูวิดีโอบน YouTube</a>
+        <button class="btn-secondary-pink" onclick="stopMusicAndBack()">กลับไปหน้าเมนู</button>
     </div>
 </div>
 
