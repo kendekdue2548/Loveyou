@@ -1,6 +1,6 @@
 let fill = 0; 
 let interval;
-let isFinishedTyping = false; // ตัวแปรกันข้อความขึ้นซ้ำ
+let isFinishedTyping = false; 
 
 function startFill() { 
     interval = setInterval(() => { 
@@ -117,16 +117,8 @@ function initScratch() {
             await new Promise(r => setTimeout(r, 400)); 
         }
 
-        // --- แก้ไขจุดนี้: สร้างปุ่มไปหน้าเมนู (หน้า 4) หลังจากพิมพ์จบ ---
-        const btnNext = document.createElement('button');
-        btnNext.className = "btn-primary";
-        btnNext.style.marginTop = "15px";
-        btnNext.innerText = "ไปหน้าเมนู ❤️";
-        btnNext.onclick = () => {
-            document.getElementById('page3').classList.add('hidden');
-            document.getElementById('page4').classList.remove('hidden');
-        };
-        overlay.appendChild(btnNext);
+        // --- แก้ไขจุดนี้: สั่งให้ปุ่มที่อยู่ด้านล่าง Card แสดงตัวออกมา ---
+        document.getElementById('btn-to-menu').classList.remove('hidden');
     }
 
     canvas.addEventListener('mousedown', () => isDrawing = true);
@@ -137,8 +129,12 @@ function initScratch() {
     canvas.addEventListener('touchmove', scratch);
 }
 
-// ฟังก์ชันสำหรับหน้า 4 (มึงเอาไว้ใช้เชื่อมต่อเมนูต่างๆ)
+// ฟังก์ชันสำหรับหน้า 4 (เมนู)
+function goToPage4() {
+    document.getElementById('page3').classList.add('hidden');
+    document.getElementById('page4').classList.remove('hidden');
+}
+
 function openGift(type) {
-    // ใส่ตรรกะหน้าย่อยของแต่ละเมนูตรงนี้
     alert("เปิด " + type + " แล้วจ้า!");
 }
