@@ -1,110 +1,24 @@
-:root {
-    --primary-pink: #d63384;
-    --bg-page: #ffdae0;
-}
-
-body {
-    font-family: 'Itim', cursive;
-    background-color: var(--bg-page);
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    user-select: none;
-}
-
-.card {
-    background: white;
-    width: 88%; 
-    max-width: 320px;
-    height: 520px;
-    border-radius: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px 20px;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(214, 51, 132, 0.12);
-    position: relative;
-}
-
+:root { --primary-pink: #d63384; --bg-page: #ffdae0; }
+body { font-family: 'Itim', cursive; background-color: var(--bg-page); margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; user-select: none; }
+.card { background: white; width: 88%; max-width: 320px; height: 520px; border-radius: 40px; display: flex; flex-direction: column; align-items: center; padding: 30px 20px; text-align: center; box-shadow: 0 15px 35px rgba(214, 51, 132, 0.12); position: relative; }
 .hidden { display: none !important; }
 
-/* --- หน้า 1: คงเดิม 100% --- */
+/* หน้า 1 & 2 */
 .header-section { width: 100%; margin-bottom: 10px; }
 .snoopy-hero-img { width: 145px; height: auto; margin-bottom: 5px; }
 .main-title { color: var(--primary-pink); font-size: 26px; font-weight: bold; margin: 0; }
 .sub-title { color: var(--primary-pink); font-size: 15px; margin: 0; opacity: 0.8; }
-
-.heart-wrapper { 
-    position: relative; 
-    width: 170px; 
-    height: 170px; 
-    margin-top: 30px; 
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.heart-svg { 
-    position: absolute; 
-    width: 100%; 
-    height: 100%; 
-    fill: none; 
-    stroke: var(--primary-pink); 
-    stroke-width: 1.2; 
-    z-index: 3; 
-}
-
-.heart-mask-fill {
-    position: absolute; 
-    width: 100%; 
-    height: 100%; 
-    z-index: 2;
-    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 28.5L14.1 26.6C7.3 20.4 3 16.5 3 11.5 3 7.4 6.4 4 10.5 4c2.3 0 4.5 1.1 5.5 3 1-1.9 3.2-3 5.5-3 4.1 0 7.5 3.4 7.5 7.5 0 5-4.3 8.9-11.1 15.1L16 28.5z"/></svg>');
-    mask-size: contain; 
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-}
-
+.heart-wrapper { position: relative; width: 170px; height: 170px; margin-top: 30px; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+.heart-svg { position: absolute; width: 100%; height: 100%; fill: none; stroke: var(--primary-pink); stroke-width: 1.2; z-index: 3; }
+.heart-mask-fill { position: absolute; width: 100%; height: 100%; z-index: 2; -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 28.5L14.1 26.6C7.3 20.4 3 16.5 3 11.5 3 7.4 6.4 4 10.5 4c2.3 0 4.5 1.1 5.5 3 1-1.9 3.2-3 5.5-3 4.1 0 7.5 3.4 7.5 7.5 0 5-4.3 8.9-11.1 15.1L16 28.5z"/></svg>'); mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; }
 .liquid-pink { position: absolute; bottom: 0; width: 100%; height: 0%; background: #f06292; transition: height 0.1s; }
 .guide-text { color: var(--primary-pink); font-size: 16px; margin-top: 20px; }
-
-/* --- หน้า 2: แก้ไขจุดนี้ให้กลางเป๊ะ --- */
 .snoopy-mail-img { width: 125px; margin-bottom: 5px; }
+.message-box-white { background-color: #f9f9f9; width: 85%; padding: 15px; border-radius: 20px; margin-top: 15px; min-height: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #444; font-size: 16px; line-height: 1.8; }
 
-.message-box-white {
-    background-color: #f9f9f9;
-    width: 85%;
-    padding: 15px;
-    border-radius: 20px;
-    margin-top: 15px;
-    min-height: 120px; /* เพิ่มพื้นที่แนวตั้งเล็กน้อย */
-    
-    /* จัดข้อความให้อยู่กลางกล่องเป๊ะ */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    
-    color: #444;
-    font-size: 16px;
-    line-height: 1.8; /* ระยะห่างบรรทัดให้ดูโปร่งสวย */
-}
-
-.btn-primary {
-    background-color: var(--primary-pink);
-    color: white;
-    border: none;
-    padding: 13px 0;
-    border-radius: 30px;
-    margin-top: auto;
-    width: 85%;
-    font-family: 'Itim';
-    font-size: 17px;
-    cursor: pointer;
-}
+/* หน้า 3: ระบบขูด */
+.scratch-container { position: relative; width: 220px; height: 280px; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+#reveal-image { width: 100%; height: 100%; object-fit: cover; }
+#scratch-canvas { position: absolute; top: 0; left: 0; cursor: crosshair; touch-action: none; z-index: 2; }
+.overlay-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.65); display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--primary-pink); font-size: 18px; font-weight: bold; line-height: 1.6; z-index: 5; }
+.btn-primary { background-color: var(--primary-pink); color: white; border: none; padding: 13px 0; border-radius: 30px; width: 85%; font-family: 'Itim'; font-size: 17px; cursor: pointer; }
