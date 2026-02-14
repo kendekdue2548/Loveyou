@@ -49,37 +49,40 @@ function initScratch() {
         for (let i = 3; i < data.length; i += 4) if (data[i] === 0) count++;
         if (count > (220 * 280) * 0.45) { 
             canvas.style.transition = "opacity 0.8s"; canvas.style.opacity = "0";
-            setTimeout(() => { canvas.remove(); showFinalMessage(); }, 800);
+            setTimeout(() => { 
+                canvas.remove(); 
+                showFinalMessage(); 
+            }, 800);
         }
     };
 
-    // --- แก้ไข: พิมพ์รวดเดียว 4 บรรทัด บรรทัดละ 1 ครั้งตามคลิป ---
+    // --- จุดที่แก้: พิมพ์แค่ 4 บรรทัด บรรทัดละครั้งเดียวตามคลิป ---
     async function showFinalMessage() {
         document.getElementById('scratch-hint').classList.add('hidden');
         const overlay = document.getElementById('final-message');
         overlay.classList.remove('hidden');
-        overlay.innerHTML = ""; // เคลียร์หน้าจอให้ว่าง
+        overlay.innerHTML = ""; // ล้างหน้าจอให้ว่างชัวร์ๆ ก่อนพิมพ์
 
         await new Promise(r => setTimeout(r, 1000)); // รอ 1 วิเห็นรูปชัดๆ
 
         const texts = [
-            "Happy Valentine Day", 
-            "แค่มีเธออยู่",          
-            "ทุกวันก็พิเศษแล้ว",      
-            "น่ารักไหมคะ"         
+            "Happy Valentine Day", // บรรทัดที่ 1
+            "แค่มีเธออยู่",          // บรรทัดที่ 2
+            "ทุกวันก็พิเศษแล้ว",      // บรรทัดที่ 3
+            "น่ารักไหมคะ"         // บรรทัดที่ 4
         ];
 
-        // วนลูปพิมพ์แค่ 4 บรรทัด บรรทัดละ 1 รอบเรียงต่อกัน
+        // พิมพ์ออกมาแค่เซ็ตเดียวจบ
         for (let i = 0; i < texts.length; i++) {
             const line = document.createElement('div');
-            line.style.margin = "5px 0"; // ระยะห่างบรรทัด
+            line.style.margin = "5px 0"; // ระยะห่างบรรทัดกำลังสวย
             overlay.appendChild(line);
             
             for (const char of texts[i]) {
                 line.innerText += char;
                 await new Promise(r => setTimeout(r, 90)); // ความเร็วพิมพ์ทีละตัว
             }
-            await new Promise(r => setTimeout(r, 400)); // จังหวะพักก่อนขึ้นบรรทัดใหม่
+            await new Promise(r => setTimeout(r, 400)); // เว้นจังหวะก่อนขึ้นบรรทัดใหม่
         }
     }
 
