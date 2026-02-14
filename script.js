@@ -182,6 +182,88 @@ function openGift(type) {
     }
 }
 
+
+// ข้อมูลคำถาม 5 ข้อ
+const quizData = [
+    {
+        q: "เราเจอกันครั้งแรกที่ไหน?",
+        options: ["มหาลัย", "ออนไลน์", "ร้านกาแฟ", "งานเลี้ยง"]
+    },
+    {
+        q: "สิ่งที่เราชอบทำด้วยกันที่สุด?",
+        options: ["ดูหนัง", "คุยกัน", "กินข้าว", "เดินเล่น"]
+    },
+    {
+        q: "เวลาเหนื่อย เราอยากอยู่กับใคร?",
+        options: ["เพื่อน", "ตัวเอง", "เธอ", "ใครก็ได้"]
+    },
+    {
+        q: "ของขวัญที่ดีที่สุดคืออะไร?",
+        options: ["เงิน", "ของแพง", "เวลา", "คำหวาน"]
+    },
+    {
+        q: "คำที่เหมาะกับเราที่สุด?",
+        options: ["บังเอิญ", "โชคดี", "ธรรมดา", "ผ่านไป"]
+    }
+];
+
+let currentQuiz = 0;
+
+// แก้ไขฟังก์ชัน openGift เพื่อรองรับหน้า Quiz
+function openGift(type) {
+    if (type === 'memory') {
+        document.getElementById('page4').classList.add('hidden');
+        document.getElementById('page-memory').classList.remove('hidden');
+        updateSlide();
+    } else if (type === 'letter') {
+        document.getElementById('page4').classList.add('hidden');
+        document.getElementById('page-letter').classList.remove('hidden');
+    } else if (type === 'quiz') {
+        document.getElementById('page4').classList.add('hidden');
+        document.getElementById('page-quiz').classList.remove('hidden');
+        loadQuiz();
+    }
+}
+
+function loadQuiz() {
+    const data = quizData[currentQuiz];
+    document.getElementById('quiz-progress').innerText = `ข้อที่ ${currentQuiz + 1} / 5`;
+    document.getElementById('question-text').innerText = data.q;
+    
+    const optionsList = document.getElementById('options-list');
+    optionsList.innerHTML = "";
+    
+    data.options.forEach(opt => {
+        const div = document.createElement('div');
+        div.className = "option-item";
+        div.innerText = opt;
+        div.onclick = function() {
+            // ลบ class selected จากตัวอื่นก่อน
+            document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+            this.classList.add('selected');
+        };
+        optionsList.appendChild(div);
+    });
+}
+
+function nextQuiz() {
+    // เช็คว่าเลือกคำตอบหรือยัง
+    if (!document.querySelector('.option-item.selected')) {
+        alert("เลือกคำตอบก่อนนะจ๊ะ!");
+        return;
+    }
+
+    currentQuiz++;
+    if (currentQuiz < quizData.length) {
+        loadQuiz();
+    } else {
+        alert("เก่งมาก! รู้จักเราดีที่สุดเลย ❤️");
+        currentQuiz = 0; // รีเซ็ตเผื่อเล่นใหม่
+        document.getElementById('page-quiz').classList.add('hidden');
+        document.getElementById('page4').classList.remove('hidden');
+    }
+}
+
 // ฟังก์ชันกลับหน้าเมนูจากหน้าจดหมาย
 function backToMenuFromLetter() {
     document.getElementById('page-letter').classList.add('hidden');
