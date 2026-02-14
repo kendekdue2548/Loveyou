@@ -246,3 +246,21 @@ body { font-family: 'Itim', cursive; background-color: var(--bg-page); margin: 0
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+
+* {
+    /* ปิดการครอบสีฟ้าเวลาลากเมาส์หรือกดค้าง (Text Selection) */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    /* ปิดกรอบสีฟ้าเวลาจิ้มบนมือถือ (Tap Highlight Color) */
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+/* ถ้ามีช่องที่อยากให้พิมพ์ได้ (ถ้ามึงมี input) ให้เปิดคืนเฉพาะจุดนั้น */
+input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+}
